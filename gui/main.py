@@ -8,13 +8,14 @@ class WebcamApp:
     def __init__(self, window, window_title):
         self.window = window
         self.window.title(window_title)
-        
-        # Initialize the webcam
+        self.window.geometry("1440x810")
+        self.window.resizable(False, False)
+
         self.cap = cv2.VideoCapture(0)
-        
+
         # Create a frame for the buttons
         self.button_frame = ttk.Frame(self.window)
-        self.button_frame.pack(fill=tk.X, side=tk.BOTTOM)
+        self.button_frame.pack(fill=tk.X, side=tk.BOTTOM, expand=True)
         
         # Create the Start Webcam button
         self.btn_start = ttk.Button(self.button_frame, text="Start Webcam", command=self.start_webcam)
@@ -29,7 +30,7 @@ class WebcamApp:
         self.btn_stop.pack(side=tk.LEFT, padx=5, pady=5)
         
         # Create the Stop Webcam button
-        self.btn_stop = ttk.Button(self.button_frame, text="Button 4", command=self.stop_webcam)
+        self.btn_stop = ttk.Button(self.button_frame, text="Exit", command=exit)
         self.btn_stop.pack(side=tk.LEFT, padx=5, pady=5)
 
         # Create a label to display the video frames

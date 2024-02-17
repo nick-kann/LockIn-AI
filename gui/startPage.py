@@ -10,7 +10,7 @@ class StartPage(tk.Frame):
 
         button1 = tk.Button(self, text="Focus Mode",
                             command=lambda: controller.show_frame("WebcamPage"))
-        button2 = tk.Button(self, text="Go to Page Two",
+        button2 = tk.Button(self, text="Graph your focus",
                             command=lambda: controller.show_frame("graphPage"))
         button1.pack()
         button2.pack()

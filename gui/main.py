@@ -2,6 +2,7 @@ import tkinter as tk                # python 3
 from tkinter import font as tkfont  # python 3
 from webcamPage import WebcamPage
 from startPage import StartPage
+from graphPage import graphPage
 from pageOne import PageOne
 from pageTwo import PageTwo
 
@@ -22,7 +23,7 @@ class SampleApp(tk.Tk):
         container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
-        for F in (StartPage, PageOne, PageTwo, WebcamPage):
+        for F in (StartPage, PageOne, PageTwo, WebcamPage, graphPage):
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = frame

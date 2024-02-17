@@ -25,7 +25,7 @@ class WebcamPage(tk.Frame):
         self.btn_stop = ttk.Button(self.button_frame, text="Stop Webcam", command=self.stop_webcam)
         self.btn_stop.pack(side=tk.LEFT, padx=5, pady=5)
 
-        # Create the Stop Webcam button
+        # Create the Start Timer Button
         self.btn_timer = ttk.Button(self.button_frame, text="Start Timer", command=self.timer_btn_press)
         self.btn_timer.pack(side=tk.LEFT, padx=5, pady=5)
         
@@ -50,6 +50,7 @@ class WebcamPage(tk.Frame):
         
         self.running = False
         self.timer_on = False
+        self.timer_paused = False
         self.timer_start_time = None
 
         self.update_frame()  # Start the update loop for the video frames
@@ -88,7 +89,7 @@ class WebcamPage(tk.Frame):
             self.video_label.imgtk = default_img
             self.video_label.config(image=default_img)
         self.parent.after(10, self.update_frame)  # Repeat after an interval
-        if self.timer_on:
+        if self.timer_on and (not self.timer_paused):
             self.update_timer()
 
     def timer_btn_press(self):
@@ -112,9 +113,27 @@ class WebcamPage(tk.Frame):
         self.timer_start_time = time.time()
         self.btn_timer.config(text="Stop Timer")
 
+        # Create the Timer Pause Button
+        self.btn_timer_pause = ttk.Button(self.button_frame, text="Pause Timer", command=self.pause_timer)
+        self.btn_timer_pause.pack(side=tk.LEFT, padx=5, pady=5)
+        self.timer_paused = False
+
     def stop_timer(self):
         self.timer_on = False
         self.btn_timer.config(text="Start Timer")
+        self.btn_timer_pause.destroy()
+
+        self.timer_label.config(text="Timer Text")
+
+    def pause_timer(self):
+        print("asfd")
+        self.timer_paused = True
+        self.btn_timer_pause.config(text="Unpause Timer", command=self.unpause_timer)
+
+    def unpause_timer(self):
+        self.timer_paused = False
+        self.btn_timer_pause.config(text="Pause Timer", command=self.pause_timer)
+
 
         
     def __del__(self):

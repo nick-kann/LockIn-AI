@@ -26,7 +26,7 @@ class WebcamApp:
         
         # Create a label to display the video frames
         self.video_label = tk.Label(self.window)
-        self.video_label.pack(padx=10, pady=10, expand=True)
+        self.video_label.pack(padx=10, pady=10, expand=False)
         
         self.running = False
         self.update_frame()  # Start the update loop for the video frames
@@ -44,9 +44,9 @@ class WebcamApp:
         # Optionally, you can set a placeholder text or a default image here
         self.video_label.config(text='Webcam stopped')  # Placeholder text
         # If setting a default image, you would do something like this:
-        # default_img = ImageTk.PhotoImage(Image.open("path_to_default_image.jpg"))
-        # self.video_label.imgtk = default_img
-        # self.video_label.config(image=default_img)
+        default_img = ImageTk.PhotoImage(Image.open("../imgs/360_F_526665446_z51DM27QvvoMZ9Gkyx9gr5mkjSOmjswR.jpg"))
+        self.video_label.imgtk = default_img
+        self.video_label.config(image=default_img)
     
     def update_frame(self):
         if self.running:

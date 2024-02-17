@@ -23,7 +23,15 @@ class WebcamApp:
         # Create the Stop Webcam button
         self.btn_stop = ttk.Button(self.button_frame, text="Stop Webcam", command=self.stop_webcam)
         self.btn_stop.pack(side=tk.LEFT, padx=5, pady=5)
+
+        # Create the Stop Webcam button
+        self.btn_stop = ttk.Button(self.button_frame, text="Button 3", command=self.stop_webcam)
+        self.btn_stop.pack(side=tk.LEFT, padx=5, pady=5)
         
+        # Create the Stop Webcam button
+        self.btn_stop = ttk.Button(self.button_frame, text="Button 4", command=self.stop_webcam)
+        self.btn_stop.pack(side=tk.LEFT, padx=5, pady=5)
+
         # Create a label to display the video frames
         self.video_label = tk.Label(self.window)
         self.video_label.pack(padx=10, pady=10, expand=False)
@@ -44,7 +52,7 @@ class WebcamApp:
         # Optionally, you can set a placeholder text or a default image here
         self.video_label.config(text='Webcam stopped')  # Placeholder text
         # If setting a default image, you would do something like this:
-        default_img = ImageTk.PhotoImage(Image.open("../imgs/360_F_526665446_z51DM27QvvoMZ9Gkyx9gr5mkjSOmjswR.jpg"))
+        default_img = ImageTk.PhotoImage(Image.open("./imgs/360_F_526665446_z51DM27QvvoMZ9Gkyx9gr5mkjSOmjswR.jpg"))
         self.video_label.imgtk = default_img
         self.video_label.config(image=default_img)
     
@@ -63,7 +71,7 @@ class WebcamApp:
                 self.video_label.imgtk = imgtk
                 self.video_label.configure(image=imgtk)
         else:
-            default_img = ImageTk.PhotoImage(Image.open("../imgs/360_F_526665446_z51DM27QvvoMZ9Gkyx9gr5mkjSOmjswR.jpg"))
+            default_img = ImageTk.PhotoImage(Image.open("./imgs/360_F_526665446_z51DM27QvvoMZ9Gkyx9gr5mkjSOmjswR.jpg"))
             self.video_label.imgtk = default_img
             self.video_label.config(image=default_img)
         self.window.after(10, self.update_frame)  # Repeat after an interval

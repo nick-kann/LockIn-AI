@@ -62,8 +62,12 @@ class WebcamApp:
                 # Update the label with the new image
                 self.video_label.imgtk = imgtk
                 self.video_label.configure(image=imgtk)
+        else:
+            default_img = ImageTk.PhotoImage(Image.open("../imgs/360_F_526665446_z51DM27QvvoMZ9Gkyx9gr5mkjSOmjswR.jpg"))
+            self.video_label.imgtk = default_img
+            self.video_label.config(image=default_img)
         self.window.after(10, self.update_frame)  # Repeat after an interval
-    
+        
     def __del__(self):
         if self.cap.isOpened():
             self.cap.release()

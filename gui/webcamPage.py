@@ -101,10 +101,11 @@ class WebcamPage(tk.Frame):
     def update_timer(self):
         if not self.timer_start_time:
             return
-        elapsed_time = int(time.time() - self.timer_start_time)
+        elapsed_time = time.time() - self.timer_start_time
         hours, remainder = divmod(elapsed_time, 3600)
         minutes, seconds = divmod(remainder, 60)
-        self.timer_label.config(text=f"{hours:02}:{minutes:02}:{seconds:02}")
+        milliseconds = (seconds - int(seconds)) * 1000
+        self.timer_label.config(text=f"{int(hours):02}:{int(minutes):02}:{int(seconds):02}.{int(milliseconds):03}")
 
     def start_timer(self):
         self.timer_on = True

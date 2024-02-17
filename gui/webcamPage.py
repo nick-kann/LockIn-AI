@@ -3,6 +3,7 @@ from tkinter import ttk
 import cv2
 from PIL import Image, ImageTk
 import threading
+import time
 
 class WebcamPage(tk.Frame):
     def __init__(self, parent, controller):
@@ -25,8 +26,8 @@ class WebcamPage(tk.Frame):
         self.btn_stop.pack(side=tk.LEFT, padx=5, pady=5)
 
         # Create the Stop Webcam button
-        self.btn_stop = ttk.Button(self.button_frame, text="Button 3", command=self.stop_webcam)
-        self.btn_stop.pack(side=tk.LEFT, padx=5, pady=5)
+        self.btn_timer = ttk.Button(self.button_frame, text="Start Timer", command=self.timer_btn_press)
+        self.btn_timer.pack(side=tk.LEFT, padx=5, pady=5)
         
         # Create the Stop Webcam button
         self.btn_stop = ttk.Button(self.button_frame, text="Exit", command=exit)
@@ -48,6 +49,9 @@ class WebcamPage(tk.Frame):
         self.timer_label.config(font=("Arial", 12))
         
         self.running = False
+        self.timer_on = False
+        self.timer_start_time = None
+
         self.update_frame()  # Start the update loop for the video frames
     
     def start_webcam(self):
@@ -84,12 +88,34 @@ class WebcamPage(tk.Frame):
             self.video_label.imgtk = default_img
             self.video_label.config(image=default_img)
         self.parent.after(10, self.update_frame)  # Repeat after an interval
+        if self.timer_on:
+            self.update_timer()
+
+    def timer_btn_press(self):
+        # If the timer rn is running
+        if self.timer_on:
+            self.stop_timer()
+        else:
+            self.start_timer()
+
+    def update_timer(self):
+        if not self.timer_start_time:
+            return
+        elapsed_time = int(time.time() - self.timer_start_time)
+        hours, remainder = divmod(elapsed_time, 3600)
+        minutes, seconds = divmod(remainder, 60)
+        self.timer_label.config(text=f"{hours:02}:{minutes:02}:{seconds:02}")
+
+    def start_timer(self):
+        self.timer_on = True
+        self.timer_start_time = time.time()
+        self.btn_timer.config(text="Stop Timer")
+
+    def stop_timer(self):
+        self.timer_on = False
+        self.btn_timer.config(text="Start Timer")
+
         
     def __del__(self):
         if self.cap.isOpened():
             self.cap.release()
-
-# Create a window and pass it to the WebcamApp class
-# root = tk.Tk()
-# app = WebcamPage()
-# 

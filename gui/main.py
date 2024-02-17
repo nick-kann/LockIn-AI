@@ -40,12 +40,12 @@ class WebcamApp:
         self.video_label = tk.Label(self.video_frame)
         self.video_label.pack()
 
-        # Overlay label
-        self.overlay_label = tk.Label(self.video_frame, text="Overlay Text", bg="yellow", fg="black")
-        self.overlay_label.place(relx=0.7, rely=0, relwidth=0.3, relheight=0.2)
-        self.overlay_label.config(bg="yellow")
-        self.overlay_label.config(fg="black")
-        self.overlay_label.config(font=("Arial", 12))
+        # Timer label
+        self.timer_label = tk.Label(self.video_frame, text="Timer Text", bg="yellow", fg="black")
+        self.timer_label.place(relx=0.7, rely=0, relwidth=0.3, relheight=0.2)
+        self.timer_label.config(bg="yellow")
+        self.timer_label.config(fg="black")
+        self.timer_label.config(font=("Arial", 12))
         
         self.running = False
         self.update_frame()  # Start the update loop for the video frames

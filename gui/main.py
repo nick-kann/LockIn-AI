@@ -1,10 +1,13 @@
 import tkinter as tk                # python 3
 from tkinter import font as tkfont  # python 3
-from main import WebcamPage
+from webcamPage import WebcamPage
+from startPage import StartPage
+from pageOne import PageOne
+from pageTwo import PageTwo
 
 class SampleApp(tk.Tk):
 
-    def __init__(self, window, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
         
         # self.title(window_title)
@@ -23,7 +26,6 @@ class SampleApp(tk.Tk):
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = frame
-            self.window = self
             # put all of the pages in the same location;
             # the one on the top of the stacking order
             # will be the one that is visible.
@@ -37,47 +39,6 @@ class SampleApp(tk.Tk):
         frame.tkraise()
 
 
-class StartPage(tk.Frame):
-
-    def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-        self.controller = controller
-        label = tk.Label(self, text="This is the start page", font=controller.title_font)
-        label.pack(side="top", fill="x", pady=10)
-
-        button1 = tk.Button(self, text="Go to Page One",
-                            command=lambda: controller.show_frame("PageOne"))
-        button2 = tk.Button(self, text="Go to Page Two",
-                            command=lambda: controller.show_frame("PageTwo"))
-        button1.pack()
-        button2.pack()
-
-
-class PageOne(tk.Frame):
-
-    def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-        self.controller = controller
-        label = tk.Label(self, text="This is page 1", font=controller.title_font)
-        label.pack(side="top", fill="x", pady=10)
-        button = tk.Button(self, text="Go to the start page",
-                           command=lambda: controller.show_frame("StartPage"))
-        button.pack()
-
-
-class PageTwo(tk.Frame):
-
-    def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
-        self.controller = controller
-        label = tk.Label(self, text="This is page 2", font=controller.title_font)
-        label.pack(side="top", fill="x", pady=10)
-        button = tk.Button(self, text="Go to the start page",
-                           command=lambda: controller.show_frame("StartPage"))
-        button.pack()
-
-
 if __name__ == "__main__":
-    root=tk.Tk()
-    app = SampleApp(root)
+    app = SampleApp()
     app.mainloop()

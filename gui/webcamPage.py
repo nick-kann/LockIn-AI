@@ -7,6 +7,7 @@ import threading
 class WebcamPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
+        self.parent = parent
         self.controller = controller
 
        # Initialize webcam
@@ -48,8 +49,6 @@ class WebcamPage(tk.Frame):
         
         self.running = False
         self.update_frame()  # Start the update loop for the video frames
-        
-        self.window.mainloop()
     
     def start_webcam(self):
         if not self.running:
@@ -83,9 +82,8 @@ class WebcamPage(tk.Frame):
         else:
             default_img = ImageTk.PhotoImage(Image.open("./imgs/360_F_526665446_z51DM27QvvoMZ9Gkyx9gr5mkjSOmjswR.jpg"))
             self.video_label.imgtk = default_img
-            print(default_img == None)
             self.video_label.config(image=default_img)
-        self.window.after(10, self.update_frame)  # Repeat after an interval
+        self.parent.after(10, self.update_frame)  # Repeat after an interval
         
     def __del__(self):
         if self.cap.isOpened():

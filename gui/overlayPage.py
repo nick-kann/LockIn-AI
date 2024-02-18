@@ -11,20 +11,22 @@ import tensorflow as tf
 from tensorflow.keras import layers, models, applications, losses
 import numpy as np
 import datetime
+import customtkinter as ctk
 
 
-class OverlayPage(tk.Frame):
+class OverlayPage(ctk.CTkFrame):
 
     def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
+        # tk.Frame.__init__(self, parent)
         self.parent = parent
+        super().__init__(parent)
         self.controller = controller
 
         # Initialize webcam
         self.cap = cv2.VideoCapture(0)
 
         # Container frame for horizontal layout
-        self.container_frame = tk.Frame(self)
+        self.container_frame = ctk.CTkFrame(self)
         self.container_frame.pack(fill=tk.BOTH)
         self.container_frame.grid_columnconfigure(0, weight=1)  # Empty side column for centering
         self.container_frame.grid_columnconfigure(1, weight=0)  # Column for the "Start Page" button
@@ -38,36 +40,36 @@ class OverlayPage(tk.Frame):
 
 
         # Start Page Button
-        self.start_page_button = ttk.Button(self.container_frame, text="Back to Home",
+        self.start_page_button = ctk.CTkButton(self.container_frame, text="Back to Home",
                            command=lambda: controller.show_frame("StartPage"))
 
         self.start_page_button.grid(row=0, column=1, padx=5, pady=5, sticky='ew')
 
         # Create the Start Timer Button
-        self.btn_timer = ttk.Button(self.container_frame, text="Start Timer", command=self.timer_btn_press)
+        self.btn_timer = ctk.CTkButton(self.container_frame, text="Start Timer", command=self.timer_btn_press)
         self.btn_timer.grid(row=0, column=2, padx=5, pady=5, sticky='ew')
 
         # Frame to contain timer
-        self.timer_frame = ttk.Frame(self.container_frame)
+        self.timer_frame = ctk.CTkFrame(self.container_frame)
         self.timer_frame.grid(row=0, column=4, padx=5, pady=5, sticky='ew')
 
         # Timer label
-        self.timer_label = tk.Label(self.timer_frame, text="Timer Text", bg="yellow", fg="black", width=20)
+        self.timer_label = tk.Label(self.timer_frame, text="Timer Text" )
         self.timer_label.pack()
 
         # Button to launch focus with overlay
-        self.btn_launch_focus_with_overlay = ttk.Button(self.container_frame, text="Launch Focus With Overlay", command=self.launch_focus_with_overlay)
+        self.btn_launch_focus_with_overlay = ctk.CTkButton(self.container_frame, text="Launch Focus With Overlay", command=self.launch_focus_with_overlay)
         self.btn_launch_focus_with_overlay.grid(row=0, column=5, padx=5, pady=5, sticky='ew')
 
         # Frame to contain symbol label
-        self.symbol_frame = ttk.Frame(self.container_frame)
+        self.symbol_frame = ctk.CTkFrame(self.container_frame)
         self.symbol_frame.grid(row=0, column=7, padx=5, pady=5, sticky='ew')
 
         # Create label to hold symbol for gesture
-        self.gesture_label = ttk.Button(self.symbol_frame, text="Gesture",  width=30, command = self.gesture_btn_press)
+        self.gesture_label = ctk.CTkButton(self.symbol_frame, text="Gesture",  width=30, command = self.gesture_btn_press)
         self.gesture_label.pack()
 
-        #self.gesture_label = ttk.Button(self.symbol_frame, text="Stop Gesture", width=30,
+        #self.gesture_label = ctk.CTkButton(self.symbol_frame, text="Stop Gesture", width=30,
         #                                command= self.stop_gesture_btn_press)
         #self.gesture_label.pack()
 
@@ -153,7 +155,7 @@ class OverlayPage(tk.Frame):
 
         self.timer_paused = False
         # Create the Timer Pause Button
-        self.btn_timer_pause = ttk.Button(self.container_frame, text="Pause Timer", command=self.pause_timer)
+        self.btn_timer_pause = ctk.CTkButton(self.container_frame, text="Pause Timer", command=self.pause_timer)
         self.btn_timer_pause.grid(row=0, column=3, padx=5, pady=5, sticky='ew')
 
     def stop_timer(self):

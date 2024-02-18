@@ -11,7 +11,7 @@ class StartPage(ctk.CTkFrame):
         label = ctk.CTkLabel(self, text="This is the start page", font=controller.title_font)
         label.pack(side="top", fill="x", pady=10)
         
-        button1 = ctk.CTkButton(self, text="Focus Mode", command=lambda: controller.show_frame("WebcamPage"))
+        button1 = ctk.CTkButton(self, hover=True, text="Focus Mode", command=lambda: controller.show_frame("WebcamPage"))
         button2 = ctk.CTkButton(self, text="Graph your focus", command=lambda: controller.show_frame("GraphPage"))
         button3 = ctk.CTkButton(self, text="Overlay Mode", command=lambda: controller.show_frame("OverlayPage"))
         

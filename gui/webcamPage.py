@@ -27,7 +27,7 @@ class WebcamPage(tk.Frame):
 
 
         # Create the Start Timer Button
-        self.btn_timer = CustomButton(self.button_frame, text="Start Timer", command=self.timer_btn_press)
+        self.btn_timer = ttk.Button(self.button_frame, text="Start Timer", command=self.timer_btn_press)
         self.btn_timer.pack(side=tk.LEFT, padx=5, pady=5)
 
 
@@ -78,7 +78,7 @@ class WebcamPage(tk.Frame):
         # Optionally, you can set a placeholder text or a default image here
         self.video_label.config(text='Webcam stopped')  # Placeholder text
         # If setting a default image, you would do something like this:
-        default_img = ImageTk.PhotoImage(Image.open("./imgs/360_F_526665446_z51DM27QvvoMZ9Gkyx9gr5mkjSOmjswR.jpg"))
+        default_img = ImageTk.PhotoImage(Image.open("./imgs/istockphoto-945783206-612x612.jpg").resize((300, 300), Image.Resampling.HAMMING))
         self.video_label.imgtk = default_img
         self.video_label.config(image=default_img)
     
@@ -118,7 +118,19 @@ class WebcamPage(tk.Frame):
         hours, remainder = divmod(elapsed_time, 3600)
         minutes, seconds = divmod(remainder, 60)
         milliseconds = (seconds - int(seconds)) * 1000
-        self.timer_label.config(text=f"{int(hours):02}:{int(minutes):02}:{int(seconds):02}.{int(milliseconds):03}")
+
+        time_str = ""
+
+        if int(hours) != 0:
+            time_str += f"{int(hours)} hr "
+        if int(minutes) != 0:
+            time_str += f"{int(minutes)} min "
+        if int(seconds) != 0:
+            time_str += f"{int(seconds)} s"
+
+
+        self.timer_label.config(text=time_str)
+        # self.timer_label.config(text=f"{int(hours):02}:{int(minutes):02}:{int(seconds):02}.{int(milliseconds):03}")
 
     def start_timer(self):
         self.timer_on = True

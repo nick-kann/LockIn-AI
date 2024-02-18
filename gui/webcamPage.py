@@ -30,8 +30,9 @@ class WebcamPage(tk.Frame):
         # self.btn_stop.pack(side=tk.LEFT, padx=5, pady=5)
 
         # Create the Stop Webcam button
-        self.btn_stop = ttk.Button(self.button_frame, text="Exit", command=exit)
+        self.btn_stop = ttk.Button(self.button_frame, text="Exit", command=lambda: controller.show_frame("StartPage"))
         self.btn_stop.pack(side=tk.LEFT, padx=5, pady=5)
+
 
         self.video_frame = tk.Frame(self, width=940, height=480)
         self.video_frame.pack(padx=10, pady=10, expand=True)

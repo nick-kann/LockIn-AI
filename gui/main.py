@@ -17,6 +17,7 @@ class SampleApp(ttkb.Window):
            
         # self.title(window_title)
         self.title_font = ctk.CTkFont(family='Helvetica', size=18, weight="bold", slant="italic")
+        ctk.set_default_color_theme("./gui/theme.json")  # Themes: "blue" (standard), "green", "dark-blue"
 
         # the container is where we'll stack a bunch of frames
         # on top of each other, then the one we want visible

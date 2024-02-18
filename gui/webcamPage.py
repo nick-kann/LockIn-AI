@@ -28,25 +28,30 @@ class WebcamPage(tk.Frame):
         # Create the Start Timer Button
         self.btn_timer = ttk.Button(self.button_frame, text="Start Timer", command=self.timer_btn_press)
         self.btn_timer.pack(side=tk.LEFT, padx=5, pady=5)
-        
+
+
+        self.btn_set_timer = ttk.Button(self.button_frame, text="Set Timer", command=self.set_timer)
+        self.btn_set_timer.pack(side=tk.LEFT, padx=5, pady=5)
+
         # Create the Stop Webcam button
         self.btn_stop = ttk.Button(self.button_frame, text="Exit", command=exit)
         self.btn_stop.pack(side=tk.LEFT, padx=5, pady=5)
 
-        self.video_frame = tk.Frame(self, width=640, height=480)
+        self.video_frame = tk.Frame(self, width=940, height=480)
         
         # Adjustments to video label to place it inside video_frame
-        self.video_label = tk.Label(self.video_frame)
+        self.video_label = tk.Label(self.video_frame, bd=15)
         self.video_label.pack()
 
         self.video_frame.pack(padx=10, pady=10, expand=True)
 
         # Timer label
-        self.timer_label = tk.Label(self.video_frame, text="Timer Text", bg="yellow", fg="black")
-        self.timer_label.place(relx=0.7, rely=0, relwidth=0.3, relheight=0.2)
-        self.timer_label.config(bg="yellow")
+        self.timer_label = tk.Label(self.video_frame, text="Timer Text", bg="#B7EDE8", fg="black", relief="solid", bd=4)
+        self.timer_label.place(relx=0.8, rely=0, relwidth=0.2, relheight=0.1)
+        self.timer_label.config(bg="#B7EDE8")
         self.timer_label.config(fg="black")
-        self.timer_label.config(font=("Arial", 12))
+        self.timer_label.config(font=("Lato", 10, "bold"))
+
         
         self.running = False
         self.timer_on = False
@@ -57,9 +62,13 @@ class WebcamPage(tk.Frame):
     
     def start_webcam(self):
         if not self.running:
+            self.timer_label.config(bd=10)
+            self.timer_label.config(font=("Lato", 30, "bold"))
             self.running = True
     
     def stop_webcam(self):
+        self.timer_label.config(bd=4)
+        self.timer_label.config(font=("Lato", 10, "bold"))
         self.running = False
         # Clear the video label
         self.video_label.config(image='')  # Clears the label
@@ -133,7 +142,11 @@ class WebcamPage(tk.Frame):
     def unpause_timer(self):
         self.timer_paused = False
         self.btn_timer_pause.config(text="Pause Timer", command=self.pause_timer)
-        
+
+
+    def set_timer(self):
+        # do ithere
+
     def __del__(self):
         if self.cap.isOpened():
             self.cap.release()

@@ -73,7 +73,7 @@ class WebcamPage(tk.Frame):
             self.running = True
     
     def stop_webcam(self):
-        self.timer.get_label().timer_label.config(bd=4)
+        self.timer.get_label().config(bd=4)
         self.timer.get_label().config(font=("Lato", 10, "bold"))
         self.running = False
         # Clear the video label

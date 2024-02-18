@@ -3,6 +3,7 @@ from tkinter import ttk
 import cv2
 from PIL import Image, ImageTk
 import threading
+# import customtkinter as ctk
 import time
 
 class OverlayPage(tk.Frame):
@@ -30,8 +31,9 @@ class OverlayPage(tk.Frame):
 
 
         # Start Page Button
-        self.start_page_button = tk.Button(self.container_frame, text="Start Page",
+        self.start_page_button = ttk.Button(self.container_frame, text="Start Page",
                            command=lambda: controller.show_frame("StartPage"))
+
         self.start_page_button.grid(row=0, column=1, padx=5, pady=5, sticky='ew')
 
         # Create the Start Timer Button
@@ -39,7 +41,7 @@ class OverlayPage(tk.Frame):
         self.btn_timer.grid(row=0, column=2, padx=5, pady=5, sticky='ew')
 
         # Frame to contain timer
-        self.timer_frame = tk.Frame(self.container_frame)
+        self.timer_frame = ttk.Frame(self.container_frame)
         self.timer_frame.grid(row=0, column=4, padx=5, pady=5, sticky='ew')
 
         # Timer label
@@ -51,11 +53,11 @@ class OverlayPage(tk.Frame):
         self.btn_launch_focus_with_overlay.grid(row=0, column=5, padx=5, pady=5, sticky='ew')
 
         # Frame to contain symbol label
-        self.symbol_frame = tk.Frame(self.container_frame)
+        self.symbol_frame = ttk.Frame(self.container_frame)
         self.symbol_frame.grid(row=0, column=7, padx=5, pady=5, sticky='ew')
 
         # Create label to hold symbol for gesture
-        self.symbol_label = tk.Label(self.symbol_frame, text="Gesture", bg="green", fg="black", width=30)
+        self.symbol_label = ttk.Label(self.symbol_frame, text="Gesture",  width=30)
         self.symbol_label.pack()
 
         self.running = False

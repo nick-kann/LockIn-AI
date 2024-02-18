@@ -3,6 +3,7 @@ import mediapipe as mp
 import pyautogui
 import numpy as  np
 import math
+import time
 
 # Initialize MediaPipe Hands
 mp_hands = mp.solutions.hands
@@ -14,6 +15,8 @@ screen_width, screen_height = pyautogui.size()
 pyautogui.FAILSAFE = False
 
 keep_running = False
+
+last_click_time = None
 
 # Convert hand landmarks to pixel coordinates
 def landmark_to_pixel(hand_landmarks, frame_width, frame_height):
@@ -27,6 +30,7 @@ def distance(point_one, point_two):
 
 # Process hand actions
 def process_hand_actions(coords, frame_width, frame_height):
+    global last_click_time
     index_tip = coords[8]
     x_scaled = np.interp(index_tip[0], (0, frame_width), (0, screen_width))
     y_scaled = np.interp(index_tip[1], (0, frame_height), (0, screen_height))
@@ -38,15 +42,17 @@ def process_hand_actions(coords, frame_width, frame_height):
     ring_tip= coords[16]
     pinky_tip= coords[20]
 
-    if distance(coords[6], thumb_tip )< 25:  # Threshold for clicking
-        pyautogui.click()
+    if distance(coords[6], thumb_tip )< 30:  # Threshold for clicking
+        if last_click_time == None or time.time() - last_click_time > 1:
+            pyautogui.click()
+            last_click_time = time.time()
     #if distance(middle_tip, thumb_tip )< 50:  # Threshold for clicking
     #    pyautogui.click(button='right')
-    if distance(middle_tip, index_tip) < 40:
+    if distance(middle_tip, index_tip) < 50:
         if(index_tip[1]<coords[0][1]):
-            pyautogui.scroll(3)
+            pyautogui.scroll(7)
         else:
-            pyautogui.scroll(-3)
+            pyautogui.scroll(-7)
 
 def main():
     cap = cv2.VideoCapture(0)

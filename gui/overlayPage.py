@@ -18,33 +18,51 @@ class OverlayPage(tk.Frame):
         # Container frame for horizontal layout
         self.container_frame = tk.Frame(self)
         self.container_frame.pack(fill=tk.BOTH)
+        self.container_frame.grid_columnconfigure(0, weight=1)  # Empty side column for centering
+        self.container_frame.grid_columnconfigure(1, weight=0)  # Column for the "Start Page" button
+        self.container_frame.grid_columnconfigure(2, weight=0)  # Column for the "Start Timer" button
+        self.container_frame.grid_columnconfigure(3, weight=0)  # Column for the "Pause Timer" button (dynamically added)
+        self.container_frame.grid_columnconfigure(4, weight=0)  # Column for additional elements if needed
+        self.container_frame.grid_columnconfigure(5, weight=0)  # Empty side column for centering
+        self.container_frame.grid_columnconfigure(6, weight=0)  # Empty side column for centering
+        self.container_frame.grid_columnconfigure(7, weight=0)  # Empty side column for centering
+        self.container_frame.grid_columnconfigure(8, weight=1)  # Empty side column for centering
+
 
         # Start Page Button
         self.start_page_button = tk.Button(self.container_frame, text="Start Page",
                            command=lambda: controller.show_frame("StartPage"))
-        #self.start_page_button.pack(side=tk.LEFT)
-        self.start_page_button.grid(row=0, column=0, padx=5, pady=5, sticky='ew')
+        self.start_page_button.grid(row=0, column=1, padx=5, pady=5, sticky='ew')
 
-        # Create the Start Timer Button, packed inside container_frame horizontally
+        # Create the Start Timer Button
         self.btn_timer = ttk.Button(self.container_frame, text="Start Timer", command=self.timer_btn_press)
-        #self.btn_timer.pack(side=tk.LEFT)
-        self.btn_timer.grid(row=0, column=1, padx=5, pady=5, sticky='ew')
+        self.btn_timer.grid(row=0, column=2, padx=5, pady=5, sticky='ew')
 
-        # Adjust timer_frame to be inside container_frame and packed horizontally
-        print("self.winfo_width()*0.55", self.winfo_width()*0.55)
-        print("self.winfo_width()", self.winfo_screenwidth())
-        self.timer_frame = tk.Frame(self.container_frame, width=int(self.winfo_screenwidth()*0.55))
-        #self.timer_frame.pack(side=tk.LEFT)
-        self.timer_frame.grid(row=0, column=3, padx=5, pady=5, sticky='ew')
+        # Frame to contain timer
+        self.timer_frame = tk.Frame(self.container_frame)
+        self.timer_frame.grid(row=0, column=4, padx=5, pady=5, sticky='ew')
 
-        # Timer label, adjusted for horizontal layout
-        self.timer_label = tk.Label(self.timer_frame, text="Timer Text", bg="yellow", fg="black")
+        # Timer label
+        self.timer_label = tk.Label(self.timer_frame, text="Timer Text", bg="yellow", fg="black", width=20)
         self.timer_label.pack()
+
+        # Button to launch focus with overlay
+        self.btn_launch_focus_with_overlay = ttk.Button(self.container_frame, text="Launch Focus With Overlay", command=self.launch_focus_with_overlay)
+        self.btn_launch_focus_with_overlay.grid(row=0, column=5, padx=5, pady=5, sticky='ew')
+
+        # Frame to contain symbol label
+        self.symbol_frame = tk.Frame(self.container_frame)
+        self.symbol_frame.grid(row=0, column=7, padx=5, pady=5, sticky='ew')
+
+        # Create label to hold symbol for gesture
+        self.symbol_label = tk.Label(self.symbol_frame, text="Gesture", bg="green", fg="black", width=30)
+        self.symbol_label.pack()
 
         self.running = False
         self.timer_on = False
         self.timer_paused = False
         self.timer_start_time = None
+        self.focus_with_overlay_launched = False
 
         self.update_frame()  # Start the update loop for the video frames
     
@@ -90,7 +108,7 @@ class OverlayPage(tk.Frame):
         self.timer_paused = False
         # Create the Timer Pause Button
         self.btn_timer_pause = ttk.Button(self.container_frame, text="Pause Timer", command=self.pause_timer)
-        self.btn_timer_pause.grid(row=0, column=2, padx=5, pady=5, sticky='ew')
+        self.btn_timer_pause.grid(row=0, column=3, padx=5, pady=5, sticky='ew')
 
     def stop_timer(self):
         self.timer_on = False
@@ -111,3 +129,21 @@ class OverlayPage(tk.Frame):
     def __del__(self):
         if self.cap.isOpened():
             self.cap.release()
+
+    def launch_focus_with_overlay(self):
+        if self.focus_with_overlay_launched:
+            self.message_frame.destroy()
+            self.message_label.destroy()
+            self.focus_with_overlay_launched = False
+            self.btn_launch_focus_with_overlay.config(text="Launch Focus With Overlay")
+        else:
+            # Create frame to contain message
+            self.message_frame = tk.Frame(self.container_frame)
+            self.message_frame.grid(row=0, column=6, padx=5, pady=5, sticky='ew')
+
+            # Create message label
+            self.message_label = tk.Label(self.message_frame, text="Focus Text", bg="red", fg="black", width=30)
+            self.message_label.pack()
+
+            self.focus_with_overlay_launched = True
+            self.btn_launch_focus_with_overlay.config(text="End Focus With Overlay")

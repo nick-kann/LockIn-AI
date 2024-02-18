@@ -8,19 +8,20 @@ from pageTwo import PageTwo
 from overlayPage import OverlayPage
 import ttkbootstrap as ttkb
 from ttkbootstrap.constants import *
+import customtkinter as ctk
 
 class SampleApp(ttkb.Window):
 
-    def __init__(self, theme='superhero', *args, **kwargs):
+    def __init__(self,  *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
            
         # self.title(window_title)
-        self.title_font = tkfont.Font(family='Helvetica', size=18, weight="bold", slant="italic")
+        self.title_font = ctk.CTkFont(family='Helvetica', size=18, weight="bold", slant="italic")
 
         # the container is where we'll stack a bunch of frames
         # on top of each other, then the one we want visible
         # will be raised above the others
-        container = tk.Frame(self, background='gray')
+        container = ctk.CTkFrame(self )
         container.pack(side="top", fill="both", expand=True)
         container.grid_rowconfigure(0, weight=1)
         container.grid_columnconfigure(0, weight=1)
@@ -57,5 +58,5 @@ class SampleApp(ttkb.Window):
 
 
 if __name__ == "__main__":
-    app = SampleApp(theme='superhero')
+    app = SampleApp()
     app.mainloop()

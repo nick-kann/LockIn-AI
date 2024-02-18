@@ -188,7 +188,7 @@ class OverlayPage(tk.Frame):
             self.running = False
 
             current_datetime = datetime.datetime.now()
-            formatted_datetime = current_datetime.strftime("%Y-%m-%d %H:%M:%S")
+            formatted_datetime = current_datetime.strftime("%Y-%m-%d %H:%M:%S" + ".lia")
             file_path = formatted_datetime
             with open(file_path, "w") as file:
                 file.writelines([str(item) + "\n" for item in self.focustracker])

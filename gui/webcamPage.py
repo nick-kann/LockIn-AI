@@ -8,6 +8,10 @@ from timert import TimerT
 import tensorflow as tf
 from tensorflow.keras import layers, models, applications, losses
 import numpy as np
+from playsound import playsound
+
+from pygame import mixer
+
 
 class WebcamPage(tk.Frame):
     def __init__(self, parent, controller):
@@ -61,7 +65,10 @@ class WebcamPage(tk.Frame):
         self.timer_label.config(fg="black")
         self.timer_label.config(font=("Lato", 20, "bold"))
         self.timer.set_label(self.timer_label)
-        
+
+        mixer.init()
+        self.sound = mixer.Sound("unfocused-alarm.mp3")
+        self.sound_playing = False
         
         self.frame_counter = 0
         
@@ -149,10 +156,13 @@ class WebcamPage(tk.Frame):
                         self.focus_label.config(text="UNFOCUSED")
                         self.focus_label.config(fg="red")
                         self.focus_label.place(relx=0.35)
+                        if not mixer.get_busy():
+                            self.sound.play()
                     else:
                         self.focus_label.config(text="FOCUSED")
                         self.focus_label.config(fg="green")
                         self.focus_label.place(relx=0.37)
+                        self.sound.stop()
                         
                     
         else:

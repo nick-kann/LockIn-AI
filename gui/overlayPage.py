@@ -108,12 +108,12 @@ class OverlayPage(tk.Frame):
                     predictions = self.loaded_model(img)
                     value = np.round(predictions[0, 0])
                     self.focuslist.append(value)
-                    if (len(self.focuslist) > 12):
+                    if (len(self.focuslist) > 10):
                         del self.focuslist[0]
                     focuscounter = 0
                     for i in self.focuslist:
                         focuscounter += i
-                    if (focuscounter >= 10):
+                    if (focuscounter >= 8):
                         self.focustracker.append(1)
                         print("UNFOCUSED")
                         if self.message_label:

@@ -40,13 +40,13 @@ def process_hand_actions(coords, frame_width, frame_height):
 
     if distance(coords[6], thumb_tip )< 25:  # Threshold for clicking
         pyautogui.click()
-    if distance(middle_tip, thumb_tip )< 50:  # Threshold for clicking
-        pyautogui.click(button='right')
-    if (middle_tip[0] < index_tip[0]):
+    #if distance(middle_tip, thumb_tip )< 50:  # Threshold for clicking
+    #    pyautogui.click(button='right')
+    if distance(middle_tip, index_tip) < 40:
         if(index_tip[1]<coords[0][1]):
-            pyautogui.scroll(1)
+            pyautogui.scroll(3)
         else:
-            pyautogui.scroll(-1)
+            pyautogui.scroll(-3)
 
 def main():
     cap = cv2.VideoCapture(0)

@@ -12,7 +12,7 @@ from tensorflow.keras import layers, models, applications, losses
 import numpy as np
 import datetime
 import customtkinter as ctk
-
+from pygame import mixer
 
 class OverlayPage(ctk.CTkFrame):
 
@@ -40,8 +40,8 @@ class OverlayPage(ctk.CTkFrame):
 
 
         # Start Page Button
-        self.start_page_button = ctk.CTkButton(self.container_frame, text="Back to Home",
-                           command=lambda: controller.show_frame("StartPage"))
+        self.start_page_button = ctk.CTkButton(self.container_frame, text="Exit",
+                           command=lambda: [self.sound.stop(), controller.show_frame("StartPage")])
 
         self.start_page_button.grid(row=0, column=1, padx=5, pady=5, sticky='ew')
 
@@ -72,6 +72,9 @@ class OverlayPage(ctk.CTkFrame):
         #self.gesture_label = ctk.CTkButton(self.symbol_frame, text="Stop Gesture", width=30,
         #                                command= self.stop_gesture_btn_press)
         #self.gesture_label.pack()
+
+        self.sound = mixer.Sound("unfocused-alarm.mp3")
+        self.sound_playing = False
 
         self.running = False
         self.timer_on = False
@@ -121,11 +124,15 @@ class OverlayPage(ctk.CTkFrame):
                         print("UNFOCUSED")
                         if self.message_label:
                             self.message_label.config(text="UNFOCUSED!!!!")
+                        if not mixer.get_busy():
+                                self.sound.play()
                     else:
                         self.focustracker.append(0)
                         print("FOCUSED")
+                        self.sound.stop()
                         if self.message_label:
                             self.message_label.config(text="Focused")
+
         else:
             default_img = ImageTk.PhotoImage(Image.open("./imgs/360_F_526665446_z51DM27QvvoMZ9Gkyx9gr5mkjSOmjswR.jpg"))
         self.parent.after(10, self.update_frame)  # Repeat after an interval

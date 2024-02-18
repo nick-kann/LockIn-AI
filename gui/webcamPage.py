@@ -8,7 +8,6 @@ from timert import TimerT
 import tensorflow as tf
 from tensorflow.keras import layers, models, applications, losses
 import numpy as np
-from playsound import playsound
 import datetime
 from pygame import mixer
 

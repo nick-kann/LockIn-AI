@@ -4,6 +4,9 @@ import cv2
 from PIL import Image, ImageTk
 import threading
 import time
+import tensorflow as tf
+from tensorflow.keras import layers, models, applications, losses
+import numpy as np
 
 class WebcamPage(tk.Frame):
     def __init__(self, parent, controller):
@@ -52,6 +55,11 @@ class WebcamPage(tk.Frame):
         self.timer_on = False
         self.timer_paused = False
         self.timer_start_time = None
+        
+        self.frame_counter = 0
+        
+        saved_model_dir = r"C:\Users\alexd\OneDrive\Documents\GitHub\Pioneer2024\gui\saved_model"
+        self.loaded_model = tf.saved_model.load(saved_model_dir)
 
         self.update_frame()  # Start the update loop for the video frames
     
@@ -84,6 +92,25 @@ class WebcamPage(tk.Frame):
                 # Update the label with the new image
                 self.video_label.imgtk = imgtk
                 self.video_label.configure(image=imgtk)
+                
+                self.frame_counter += 1
+                if self.frame_counter >= 200:
+                    self.frame_counter = 0
+                    # converting pixel values (uint8) to float32 type
+                    img = tf.cast(img, tf.float32)
+                    # normalizing the data to be in range of -1, +1
+                    img = applications.resnet_v2.preprocess_input(img)
+                    # resizing all images to a shape of 224x*224*3
+                    img = tf.image.resize(img, (224, 224))
+                    img = img.numpy()
+                    img = np.expand_dims(img, axis = 0)
+                    predictions = self.loaded_model(img)
+                    value = np.round(predictions[0, 0])
+                    if value == 0:
+                        print("Focused")
+                    else:
+                        print("Unfocused")
+                    
         else:
             default_img = ImageTk.PhotoImage(Image.open("./imgs/360_F_526665446_z51DM27QvvoMZ9Gkyx9gr5mkjSOmjswR.jpg"))
             self.video_label.imgtk = default_img

@@ -59,7 +59,7 @@ class WebcamPage(tk.Frame):
         
         self.frame_counter = 0
         
-        saved_model_dir = r"C:\Users\alexd\OneDrive\Documents\GitHub\Pioneer2024\gui\saved_model"
+        saved_model_dir = "./saved_model"
         self.loaded_model = tf.saved_model.load(saved_model_dir)
         
         self.running = False

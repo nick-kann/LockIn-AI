@@ -96,6 +96,7 @@ class WebcamPage(tk.Frame):
             self.video_label.config(image=default_img)
         self.parent.after(10, self.update_frame)  # Repeat after an interval
         if self.timer.timer_on and (not self.timer.timer_paused):
+        if self.timer.timer_on and (not self.timer.timer_paused):   
             self.timer.update_timer()
 
     def __del__(self):

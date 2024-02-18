@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import ttk
 import customtkinter as ctk
+from PIL import Image, ImageTk
 
 class StartPage(ctk.CTkFrame):
 
@@ -8,10 +9,13 @@ class StartPage(ctk.CTkFrame):
         super().__init__(parent)
         self.controller = controller
         
-        # label = ctk.CTkLabel(self, text="FAT", font=controller.title_font)
-        # label.pack(side="top", fill="x", pady=10)
+        img = Image.open('imgs/logo.png')
+        photo = ImageTk.PhotoImage(img)
 
-        button_style = {"foreground": "white"}
+        # Create an image label widget and pack it at the top
+        image_label = ctk.CTkLabel(self)
+        image_label.configure(image=photo,text="")
+        image_label.pack(pady=20)
 
         button1 = ctk.CTkButton(self, width = 210, height = 50, font = ('Lato', 20, 'bold'), text_color="white", text="FOCUS MODE", command=lambda: controller.show_frame("WebcamPage"), fg_color="#9B9999", hover_color="#676767")
         button1.pack(pady=20)

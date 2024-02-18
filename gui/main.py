@@ -15,7 +15,7 @@ class SampleApp(ttkb.Window):
     def __init__(self,  *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
            
-        # self.title(window_title)
+        self.title("LockInAI")
         self.title_font = ctk.CTkFont(family='Helvetica', size=18, weight="bold", slant="italic")
         ctk.set_default_color_theme("./gui/theme.json")  # Themes: "blue" (standard), "green", "dark-blue"
 

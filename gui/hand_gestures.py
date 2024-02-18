@@ -13,6 +13,8 @@ mp_drawing = mp.solutions.drawing_utils
 screen_width, screen_height = pyautogui.size()
 pyautogui.FAILSAFE = False
 
+keep_running = False
+
 # Convert hand landmarks to pixel coordinates
 def landmark_to_pixel(hand_landmarks, frame_width, frame_height):
     coords = {}
@@ -47,8 +49,9 @@ def process_hand_actions(coords, frame_width, frame_height):
             pyautogui.scroll(-1)
 
 def main():
+    keep_running = True
     cap = cv2.VideoCapture(0)
-    while True:
+    while keep_running:
         success, frame = cap.read()
         if not success:
             continue
@@ -65,7 +68,7 @@ def main():
                 coords = landmark_to_pixel(handLms, frame_width, frame_height)
                 process_hand_actions(coords, frame_width, frame_height)
 
-        cv2.imshow('Virtual Mouse', frame)
+        #cv2.imshow('Virtual Mouse', frame)
         if cv2.waitKey(1) & 0xFF == 27:  # ESC to exit
             break
 

@@ -63,6 +63,8 @@ class WebcamPage(tk.Frame):
         saved_model_dir = "./saved_model"
         self.loaded_model = tf.saved_model.load(saved_model_dir)
         
+        self.focuslist = []
+        
         self.running = False
         self.update_frame()  # Start the update loop for the video frames
 
@@ -107,7 +109,7 @@ class WebcamPage(tk.Frame):
                 self.video_label.configure(image=imgtk)
                 
                 self.frame_counter += 1
-                if self.frame_counter >= 200:
+                if self.frame_counter >= 15:
                     self.frame_counter = 0
                     # converting pixel values (uint8) to float32 type
                     img = tf.cast(img, tf.float32)
@@ -119,10 +121,14 @@ class WebcamPage(tk.Frame):
                     img = np.expand_dims(img, axis = 0)
                     predictions = self.loaded_model(img)
                     value = np.round(predictions[0, 0])
-                    if value == 0:
-                        print("Focused")
-                    else:
-                        print("Unfocused")
+                    self.focuslist.append(value)
+                    if (len(self.focuslist) > 12):
+                        del self.focuslist[0]
+                    focuscounter = 0
+                    for i in self.focuslist:
+                        focuscounter += i
+                    if (focuscounter >= 10):
+                        print("UNFOCUSED")
                     
         else:
             default_img = ImageTk.PhotoImage(Image.open("./imgs/istockphoto-945783206-612x612.jpg").resize((300, 300), Image.Resampling.HAMMING))

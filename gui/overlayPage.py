@@ -13,6 +13,8 @@ import numpy as np
 import datetime
 import customtkinter as ctk
 from pygame import mixer
+from timert import TimerT
+
 
 class OverlayPage(ctk.CTkFrame):
 
@@ -46,15 +48,19 @@ class OverlayPage(ctk.CTkFrame):
         self.start_page_button.grid(row=0, column=1, padx=5, pady=5, sticky='ew')
 
         # Create the Start Timer Button
-        self.btn_timer = ctk.CTkButton(self.container_frame, text="Start Timer", command=self.timer_btn_press)
+        self.btn_timer = ctk.CTkButton(self.container_frame, text="Start Timer")
         self.btn_timer.grid(row=0, column=2, padx=5, pady=5, sticky='ew')
 
         # Frame to contain timer
         self.timer_frame = ctk.CTkFrame(self.container_frame)
         self.timer_frame.grid(row=0, column=4, padx=5, pady=5, sticky='ew')
 
+        self.timer = TimerT(self.timer_frame, self.btn_timer)
+        self.btn_timer.configure(command=self.timer.timer_btn_press)
+
         # Timer label
         self.timer_label = tk.Label(self.timer_frame, text="Timer Text" )
+        self.timer.set_label(self.timer_label)
         self.timer_label.pack()
 
         # Button to launch focus with overlay
@@ -77,9 +83,6 @@ class OverlayPage(ctk.CTkFrame):
         self.sound_playing = False
 
         self.running = False
-        self.timer_on = False
-        self.timer_paused = False
-        self.timer_start_time = None
         self.focus_with_overlay_launched = False
 
         self.frame_counter = 0
@@ -136,50 +139,8 @@ class OverlayPage(ctk.CTkFrame):
         else:
             default_img = ImageTk.PhotoImage(Image.open("./imgs/360_F_526665446_z51DM27QvvoMZ9Gkyx9gr5mkjSOmjswR.jpg"))
         self.parent.after(10, self.update_frame)  # Repeat after an interval
-        if self.timer_on and (not self.timer_paused):
-            self.update_timer()
-
-    def timer_btn_press(self):
-        # If the timer rn is running
-        if self.timer_on:
-            self.stop_timer()
-        else:
-            self.start_timer()
-
-    def update_timer(self):
-        if not self.timer_start_time:
-            return
-        elapsed_time = time.time() - self.timer_start_time
-        hours, remainder = divmod(elapsed_time, 3600)
-        minutes, seconds = divmod(remainder, 60)
-        milliseconds = (seconds - int(seconds)) * 1000
-        self.timer_label.config(text=f"{int(hours):02}:{int(minutes):02}:{int(seconds):02}.{int(milliseconds):03}")
-
-    def start_timer(self):
-        self.timer_on = True
-        self.timer_start_time = time.time()
-        self.btn_timer.config(text="Reset Timer")
-
-        self.timer_paused = False
-        # Create the Timer Pause Button
-        self.btn_timer_pause = ctk.CTkButton(self.container_frame, text="Pause Timer", command=self.pause_timer)
-        self.btn_timer_pause.grid(row=0, column=3, padx=5, pady=5, sticky='ew')
-
-    def stop_timer(self):
-        self.timer_on = False
-        self.btn_timer.config(text="Start Timer")
-        self.btn_timer_pause.destroy()
-
-        self.timer_label.config(text="Timer Text")
-
-    def pause_timer(self):
-        print("asfd")
-        self.timer_paused = True
-        self.btn_timer_pause.config(text="Unpause Timer", command=self.unpause_timer)
-
-    def unpause_timer(self):
-        self.timer_paused = False
-        self.btn_timer_pause.config(text="Pause Timer", command=self.pause_timer)
+        if self.timer.timer_on and (not self.timer.timer_paused):   
+            self.timer.update_timer()
 
     def __del__(self):
         if self.cap.isOpened():

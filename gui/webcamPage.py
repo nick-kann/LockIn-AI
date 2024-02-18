@@ -25,8 +25,9 @@ class WebcamPage(tk.Frame):
         self.btn_stop = ttk.Button(self.button_frame, text="Stop Webcam", command=self.stop_webcam)
         self.btn_stop.pack(side=tk.LEFT, padx=5, pady=5)
 
+
         # Create the Start Timer Button
-        self.btn_timer = ttk.Button(self.button_frame, text="Start Timer", command=self.timer_btn_press)
+        self.btn_timer = CustomButton(self.button_frame, text="Start Timer", command=self.timer_btn_press)
         self.btn_timer.pack(side=tk.LEFT, padx=5, pady=5)
 
 
@@ -59,16 +60,18 @@ class WebcamPage(tk.Frame):
         self.timer_start_time = None
 
         self.update_frame()  # Start the update loop for the video frames
-    
+
+
     def start_webcam(self):
         if not self.running:
+            self.running = True
             self.timer_label.config(bd=10)
             self.timer_label.config(font=("Lato", 30, "bold"))
-            self.running = True
     
     def stop_webcam(self):
         self.timer_label.config(bd=4)
         self.timer_label.config(font=("Lato", 10, "bold"))
+
         self.running = False
         # Clear the video label
         self.video_label.config(image='')  # Clears the label
@@ -94,7 +97,7 @@ class WebcamPage(tk.Frame):
                 self.video_label.imgtk = imgtk
                 self.video_label.configure(image=imgtk)
         else:
-            default_img = ImageTk.PhotoImage(Image.open("./imgs/360_F_526665446_z51DM27QvvoMZ9Gkyx9gr5mkjSOmjswR.jpg"))
+            default_img = ImageTk.PhotoImage(Image.open("./imgs/istockphoto-945783206-612x612.jpg").resize((300, 300), Image.Resampling.HAMMING))
             self.video_label.imgtk = default_img
             self.video_label.config(image=default_img)
         self.parent.after(10, self.update_frame)  # Repeat after an interval
@@ -145,7 +148,7 @@ class WebcamPage(tk.Frame):
 
 
     def set_timer(self):
-        # do ithere
+        pass
 
     def __del__(self):
         if self.cap.isOpened():

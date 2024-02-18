@@ -12,30 +12,34 @@ class OverlayPage(tk.Frame):
         self.parent = parent
         self.controller = controller
 
+        # Initialize webcam
+        self.cap = cv2.VideoCapture(0)
+
         # Container frame for horizontal layout
         self.container_frame = tk.Frame(self)
         self.container_frame.pack(fill=tk.BOTH)
 
-        # Adjust button to be packed inside container_frame horizontally
-        button = tk.Button(self.container_frame, text="Start Page",
+        # Start Page Button
+        self.start_page_button = tk.Button(self.container_frame, text="Start Page",
                            command=lambda: controller.show_frame("StartPage"))
-        button.pack(side=tk.LEFT, padx=5, pady=5)
+        #self.start_page_button.pack(side=tk.LEFT)
+        self.start_page_button.grid(row=0, column=0, padx=5, pady=5, sticky='ew')
 
-        # Adjust button_frame to be inside container_frame and packed horizontally
-        self.button_frame = ttk.Frame(self.container_frame)
-        self.button_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
-
-        # Create the Start Timer Button, packed inside button_frame horizontally
-        self.btn_timer = ttk.Button(self.button_frame, text="Start Timer", command=self.timer_btn_press)
-        self.btn_timer.pack(side=tk.LEFT, padx=5, pady=5)
+        # Create the Start Timer Button, packed inside container_frame horizontally
+        self.btn_timer = ttk.Button(self.container_frame, text="Start Timer", command=self.timer_btn_press)
+        #self.btn_timer.pack(side=tk.LEFT)
+        self.btn_timer.grid(row=0, column=1, padx=5, pady=5, sticky='ew')
 
         # Adjust timer_frame to be inside container_frame and packed horizontally
-        self.timer_frame = tk.Frame(self.container_frame)
-        self.timer_frame.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
+        print("self.winfo_width()*0.55", self.winfo_width()*0.55)
+        print("self.winfo_width()", self.winfo_screenwidth())
+        self.timer_frame = tk.Frame(self.container_frame, width=int(self.winfo_screenwidth()*0.55))
+        #self.timer_frame.pack(side=tk.LEFT)
+        self.timer_frame.grid(row=0, column=3, padx=5, pady=5, sticky='ew')
 
         # Timer label, adjusted for horizontal layout
         self.timer_label = tk.Label(self.timer_frame, text="Timer Text", bg="yellow", fg="black")
-        self.timer_label.pack(side=tk.LEFT, padx=5)
+        self.timer_label.pack()
 
         self.running = False
         self.timer_on = False
@@ -83,10 +87,10 @@ class OverlayPage(tk.Frame):
         self.timer_start_time = time.time()
         self.btn_timer.config(text="Reset Timer")
 
-        # Create the Timer Pause Button
-        self.btn_timer_pause = ttk.Button(self.button_frame, text="Pause Timer", command=self.pause_timer)
-        self.btn_timer_pause.pack(side=tk.LEFT, padx=5, pady=5)
         self.timer_paused = False
+        # Create the Timer Pause Button
+        self.btn_timer_pause = ttk.Button(self.container_frame, text="Pause Timer", command=self.pause_timer)
+        self.btn_timer_pause.grid(row=0, column=2, padx=5, pady=5, sticky='ew')
 
     def stop_timer(self):
         self.timer_on = False

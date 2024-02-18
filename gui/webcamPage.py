@@ -15,7 +15,7 @@ class WebcamPage(tk.Frame):
         self.parent = parent
         self.controller = controller
 
-       # Initialize webcam
+        # Initialize webcam
         self.cap = cv2.VideoCapture(0)
 
         # Create a frame for the buttons

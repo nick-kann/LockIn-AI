@@ -12,19 +12,19 @@ class StartPage(tk.Frame):
         
         # Styling for the buttons
         style = ttk.Style()
-        style.configure('Main.TButton', font=('Lato', 30))
+        style.configure('Main.TButton', font=('Lato', 50))
         
         # Button 1: FOCUS MODE
         button1 = ttk.Button(self, text="FOCUS MODE", style='Main.TButton',
                             command=lambda: controller.show_frame("WebcamPage"))
-        button1.pack(pady=20, padx=50, ipadx=10, ipady=10, fill='x')
+        button1.pack(pady=20, padx=50, ipadx=5, ipady=10, fill='x')
         
         # Button 2: GRAPH YOUR FOCUS
         button2 = ttk.Button(self, text="GRAPH YOUR FOCUS", style='Main.TButton',
                             command=lambda: controller.show_frame("GraphPage"))
-        button2.pack(pady=20, padx=50, ipadx=10, ipady=10, fill='x')
+        button2.pack(pady=20, padx=50, ipadx=5, ipady=10, fill='x')
         
         # Button 3: OVERLAY MODE
         button3 = ttk.Button(self, text="OVERLAY MODE", style='Main.TButton',
                             command=lambda: controller.show_frame("OverlayPage"))
-        button3.pack(pady=20, padx=50, ipadx=10, ipady=10, fill='x')
+        button3.pack(pady=20, padx=50, ipadx=5, ipady=10, fill='x')

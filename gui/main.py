@@ -6,10 +6,12 @@ from graphPage import graphPage
 from pageOne import PageOne
 from pageTwo import PageTwo
 from overlayPage import OverlayPage
+import ttkbootstrap as ttkb
+from ttkbootstrap.constants import *
 
-class SampleApp(tk.Tk):
+class SampleApp(ttkb.Window):
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, theme='superhero', *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
         
         # self.title(window_title)
@@ -51,5 +53,5 @@ class SampleApp(tk.Tk):
 
 
 if __name__ == "__main__":
-    app = SampleApp()
+    app = SampleApp(theme='superhero')
     app.mainloop()

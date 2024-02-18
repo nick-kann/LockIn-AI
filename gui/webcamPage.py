@@ -26,12 +26,13 @@ class WebcamPage(tk.Frame):
         self.btn_start = ttk.Button(self.button_frame, text="Start Webcam", command=self.start_webcam)
         self.btn_start.pack(side=tk.LEFT, padx=5, pady=5)
         
-        self.btn_stop = ttk.Button(self.button_frame, text="Stop Webcam", command=self.stop_webcam)
-        self.btn_stop.pack(side=tk.LEFT, padx=5, pady=5)
+        # self.btn_stop = ttk.Button(self.button_frame, text="Stop Webcam", command=self.stop_webcam)
+        # self.btn_stop.pack(side=tk.LEFT, padx=5, pady=5)
 
         # Create the Stop Webcam button
-        self.btn_stop = ttk.Button(self.button_frame, text="Exit", command=exit)
+        self.btn_stop = ttk.Button(self.button_frame, text="Exit", command=lambda: controller.show_frame("StartPage"))
         self.btn_stop.pack(side=tk.LEFT, padx=5, pady=5)
+
 
         self.video_frame = tk.Frame(self, width=940, height=480)
         self.video_frame.pack(padx=10, pady=10, expand=True)
@@ -62,6 +63,8 @@ class WebcamPage(tk.Frame):
         saved_model_dir = "./saved_model"
         self.loaded_model = tf.saved_model.load(saved_model_dir)
         
+        self.focuslist = []
+        
         self.running = False
         self.update_frame()  # Start the update loop for the video frames
 
@@ -71,9 +74,14 @@ class WebcamPage(tk.Frame):
             self.timer.get_label().config(bd=10)
             self.timer.get_label().config(font=("Lato", 30, "bold"))
             self.running = True
+            self.btn_start.config(text="Stop Webcam")
+        else:
+            self.stop_webcam()
+            self.btn_start.config(text="Start Webcam")
+            self.running = False
     
     def stop_webcam(self):
-        self.timer.get_label().timer_label.config(bd=4)
+        self.timer.get_label().config(bd=4)
         self.timer.get_label().config(font=("Lato", 10, "bold"))
         self.running = False
         # Clear the video label
@@ -101,7 +109,7 @@ class WebcamPage(tk.Frame):
                 self.video_label.configure(image=imgtk)
                 
                 self.frame_counter += 1
-                if self.frame_counter >= 200:
+                if self.frame_counter >= 15:
                     self.frame_counter = 0
                     # converting pixel values (uint8) to float32 type
                     img = tf.cast(img, tf.float32)
@@ -113,10 +121,14 @@ class WebcamPage(tk.Frame):
                     img = np.expand_dims(img, axis = 0)
                     predictions = self.loaded_model(img)
                     value = np.round(predictions[0, 0])
-                    if value == 0:
-                        print("Focused")
-                    else:
-                        print("Unfocused")
+                    self.focuslist.append(value)
+                    if (len(self.focuslist) > 12):
+                        del self.focuslist[0]
+                    focuscounter = 0
+                    for i in self.focuslist:
+                        focuscounter += i
+                    if (focuscounter >= 10):
+                        print("UNFOCUSED")
                     
         else:
             default_img = ImageTk.PhotoImage(Image.open("./imgs/istockphoto-945783206-612x612.jpg").resize((300, 300), Image.Resampling.HAMMING))

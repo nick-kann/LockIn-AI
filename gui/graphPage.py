@@ -2,38 +2,28 @@ import tkinter as tk
 from tkinter import ttk
 from PIL import Image, ImageTk
 import threading
+from tkinter import filedialog
 
-class graphPage(tk.Frame):
+class GraphPage(tk.Frame):
     def __init__(self, parent, controller):
         tk.Frame.__init__(self, parent)
         self.controller = controller
+        self.filepath = tk.StringVar()  # Variable to hold the filepath\
 
-        # Button frame setup
-        self.button_frame = ttk.Frame(self)
-        self.button_frame.pack(fill=tk.X, side=tk.BOTTOM, expand=True)
+        """
+        file_label = tk.Label(self, textvariable=self.filepath)  # Label to display the selected file path
+        file_label.pack(pady=(0, 20))
+        """
         
-        # Buttons setup
-        self.btn_start = ttk.Button(self.button_frame, text="Start Webcam", command=self.meow)
-        self.btn_start.pack(side=tk.LEFT, padx=5, pady=5)
+        file_button = ttk.Button(self, text="Select a file", style='Main.TButton', command=self.select_file)
+        file_button.pack()
         
-        self.btn_stop = ttk.Button(self.button_frame, text="Stop Webcam", command=self.meow)
-        self.btn_stop.pack(side=tk.LEFT, padx=5, pady=5)
+        button = ttk.Button(self, text="Go to the start page", style='Main.TButton',
+                           command=lambda: controller.show_frame("StartPage"))
+        button.pack()
 
-        self.btn_stop = ttk.Button(self.button_frame, text="Button 3", command=self.meow)
-        self.btn_stop.pack(side=tk.LEFT, padx=5, pady=5)
-        
-        self.btn_stop = ttk.Button(self.button_frame, text="Exit", command=lambda: controller.show_frame("StartPage"))
-        self.btn_stop.pack(side=tk.LEFT, padx=5, pady=5)
-
-        # Image setup
-        self.img = ImageTk.PhotoImage(Image.open("./imgs/graph.png"))  # Keep reference to the image
-        self.image_frame = tk.Frame(self, width=640, height=480)
-        self.image_frame.pack(padx=10, pady=10, expand=True)
-        
-        # Label for image display
-        label = tk.Label(self.image_frame, image=self.img)
-        label.pack(expand=True)  # Center the label within image_frame
-
-    def meow(self):
-        print("meow")
-
+    def select_file(self):
+        """Open a file dialog and update the filepath label with the selected file's path."""
+        filename = filedialog.askopenfilename()  # Open the file dialog
+        if filename:  # If a file was selected
+            self.filepath.set(filename)  # Update the filepath variable

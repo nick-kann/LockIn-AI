@@ -50,13 +50,13 @@ class TimerT():
         time_text += f"{int(seconds)} s"
             
         
-        self.timer_label.config(text=time_text)
+        self.timer_label.configure(text=time_text)
 
     def start_timer(self):
 
         self.timer_on = True
         self.timer_start_time = time.time()
-        self.btn_timer.config(text="Stop Timer")
+        self.btn_timer.configure(text="Stop Timer")
 
         # Create the Timer Pause Button
         self.btn_timer_pause = ttk.Button(self.container, text="Pause Timer", command=self.pause_timer)
@@ -65,10 +65,12 @@ class TimerT():
 
     def stop_timer(self):
         self.timer_on = False
-        self.btn_timer.config(text="Start Timer")
+        self.btn_timer.configure(text="Start Timer")
         self.btn_timer_pause.destroy()
 
-        self.timer_label.config(text="Timer Text")
+        self.timer_label.configure(text="Timer Text")
+
+        self.total_time_paused = 0
 
 
 
@@ -76,11 +78,11 @@ class TimerT():
         print("asfd")
         self.timer_paused = True
         self.time_when_paused = time.time()
-        self.btn_timer_pause.config(text="Unpause Timer", command=self.unpause_timer)
+        self.btn_timer_pause.configure(text="Unpause Timer", command=self.unpause_timer)
 
     def unpause_timer(self):
         self.timer_paused = False
-        self.btn_timer_pause.config(text="Pause Timer", command=self.pause_timer)
+        self.btn_timer_pause.configure(text="Pause Timer", command=self.pause_timer)
         self.total_time_paused += time.time() - self.time_when_paused
 
 

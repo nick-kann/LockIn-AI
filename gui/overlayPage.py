@@ -161,10 +161,14 @@ class OverlayPage(tk.Frame):
             hand_gestures.keep_running = True
             self.gesture_thread = threading.Thread(target = hand_gestures.main)
             self.gesture_thread.start()
+
+            self.gesture_label.config(text="Stop Gestures")
         else:
             hand_gestures.keep_running = False
             if hasattr(self, 'gesture_thread') and self.gesture_thread.is_alive():
                 self.gesture_thread.join()
+
+            self.gesture_label.config(text="Gestures")
 
     def stop_gesture_btn_press(self):
         hand_gestures.keep_running = False

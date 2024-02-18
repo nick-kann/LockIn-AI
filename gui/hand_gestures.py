@@ -13,7 +13,7 @@ mp_drawing = mp.solutions.drawing_utils
 screen_width, screen_height = pyautogui.size()
 pyautogui.FAILSAFE = False
 
-keep_running = False
+keep_running = True
 
 # Convert hand landmarks to pixel coordinates
 def landmark_to_pixel(hand_landmarks, frame_width, frame_height):
@@ -49,7 +49,6 @@ def process_hand_actions(coords, frame_width, frame_height):
             pyautogui.scroll(-1)
 
 def main():
-    keep_running = True
     cap = cv2.VideoCapture(0)
     while keep_running:
         success, frame = cap.read()

@@ -73,7 +73,7 @@ class OverlayPage(tk.Frame):
         self.focus_with_overlay_launched = False
 
         self.update_frame()  # Start the update loop for the video frames
-    
+
     def update_frame(self):
         if self.running:
             # Capture the latest frame from the webcam
@@ -133,7 +133,7 @@ class OverlayPage(tk.Frame):
     def unpause_timer(self):
         self.timer_paused = False
         self.btn_timer_pause.config(text="Pause Timer", command=self.pause_timer)
-        
+
     def __del__(self):
         if self.cap.isOpened():
             self.cap.release()
@@ -157,9 +157,11 @@ class OverlayPage(tk.Frame):
             self.btn_launch_focus_with_overlay.config(text="End Focus With Overlay")
 
     def gesture_btn_press(self):
-        thread = threading.Thread(target = hand_gestures.main())
-        thread.start()
+        hand_gestures.keep_running = True
+        self.gesture_thread = threading.Thread(target = hand_gestures.main)
+        self.gesture_thread.start()
 
     def stop_gesture_btn_press(self):
         hand_gestures.keep_running = False
-        thread.join()
+        if hasattr(self, 'gesture_thread') and self.gesture_thread.is_alive():
+            self.gesture_thread.join()

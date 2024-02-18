@@ -14,7 +14,8 @@ class WebcamPage(tk.Frame):
         tk.Frame.__init__(self, parent)
         self.parent = parent
         self.controller = controller
-
+        
+        self.parent.configure(bg="gray")
        # Initialize webcam
         self.cap = cv2.VideoCapture(0)
 
@@ -55,12 +56,13 @@ class WebcamPage(tk.Frame):
         self.btn_timer.config(command=self.timer.timer_btn_press)
         #self.btn_set_timer.config(command=self.timer.set_timer)
 
-        self.timer_label = tk.Label(self.video_frame, text="Timer Text", bg="#B7EDE8", fg="black", relief="solid", bd=4)
+        self.timer_label = tk.Label(self.video_frame, text="Timer", bg="#B7EDE8", fg="black", relief="solid", bd=4)
         self.timer_label.place(relx=0.679, rely=0.027, relwidth=0.3, relheight=0.1)
         self.timer_label.config(bg="#B7EDE8")
         self.timer_label.config(fg="black")
         self.timer_label.config(font=("Lato", 20, "bold"))
         self.timer.set_label(self.timer_label)
+        
         
         self.frame_counter = 0
         
@@ -79,6 +81,14 @@ class WebcamPage(tk.Frame):
             self.btn_start.config(text="Stop Webcam")
             self.timer.get_label().config(bd=4)
             self.timer.get_label().config(font=("Lato", 20, "bold"))
+            
+            
+            self.focus_label = tk.Label(self, text="FOCUSED", bg="white", relief="solid", bd=0)
+            self.focus_label.config(fg="green")
+            
+            self.focus_label.place(relx=0.37, rely=0.7, relwidth=0.3, relheight=0.1)
+            self.focus_label.config(font=("Lato", 30, "bold"))
+            
         else:
             self.stop_webcam()
             self.btn_start.config(text="Start Webcam")
@@ -96,6 +106,8 @@ class WebcamPage(tk.Frame):
         default_img = ImageTk.PhotoImage(Image.open("./imgs/istockphoto-945783206-612x612.jpg").resize((640, 480), Image.Resampling.HAMMING))
         self.video_label.imgtk = default_img
         self.video_label.config(image=default_img)
+
+              
     
     def update_frame(self):
         if self.running:
@@ -133,6 +145,15 @@ class WebcamPage(tk.Frame):
                         focuscounter += i
                     if (focuscounter >= 10):
                         print("UNFOCUSED")
+                        
+                        self.focus_label.config(text="UNFOCUSED")
+                        self.focus_label.config(fg="red")
+                        self.focus_label.place(relx=0.35)
+                    else:
+                        self.focus_label.config(text="FOCUSED")
+                        self.focus_label.config(fg="green")
+                        self.focus_label.place(relx=0.37)
+                        
                     
         else:
             default_img = ImageTk.PhotoImage(Image.open("./imgs/istockphoto-945783206-612x612.jpg").resize((640, 480), Image.Resampling.HAMMING))

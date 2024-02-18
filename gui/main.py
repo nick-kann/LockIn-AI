@@ -13,17 +13,18 @@ class SampleApp(ttkb.Window):
 
     def __init__(self, theme='superhero', *args, **kwargs):
         tk.Tk.__init__(self, *args, **kwargs)
-        
+           
         # self.title(window_title)
         self.title_font = tkfont.Font(family='Helvetica', size=18, weight="bold", slant="italic")
 
         # the container is where we'll stack a bunch of frames
         # on top of each other, then the one we want visible
         # will be raised above the others
-        container = tk.Frame(self)
+        container = tk.Frame(self, background='gray')
         container.pack(side="top", fill="both", expand=True)
         container.grid_rowconfigure(0, weight=1)
         container.grid_columnconfigure(0, weight=1)
+        
 
         self.frames = {}
         for F in (StartPage, PageOne, PageTwo, WebcamPage, graphPage, OverlayPage):
@@ -34,6 +35,8 @@ class SampleApp(ttkb.Window):
             # the one on the top of the stacking order
             # will be the one that is visible.
             frame.grid(row=0, column=0, sticky="nsew")
+        
+       
 
         self.show_frame("StartPage")
 
@@ -43,6 +46,7 @@ class SampleApp(ttkb.Window):
         if page_name=="OverlayPage":
             screen_width = self.winfo_screenwidth()  # Get the width of the screen
             self.geometry(f"{screen_width}x100")  # Set window width to screen width and height to 600
+            
             self.attributes('-topmost', True)  # Keep window always on top
         else:
             self.geometry("")  # Reset to default size

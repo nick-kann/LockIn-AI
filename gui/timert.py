@@ -17,6 +17,8 @@ class TimerT():
         self.timer_paused = False
         self.timer_start_time = None
 
+        self.total_time_paused = 0
+
     def set_label(self, timer_label):
        self.timer_label = timer_label
 
@@ -33,7 +35,7 @@ class TimerT():
     def update_timer(self):
         if not self.timer_start_time:
             return
-        elapsed_time = time.time() - self.timer_start_time
+        elapsed_time = time.time() - self.timer_start_time - self.total_time_paused
         hours, remainder = divmod(elapsed_time, 3600)
         minutes, seconds = divmod(remainder, 60)
         milliseconds = (seconds - int(seconds)) * 1000
@@ -73,11 +75,13 @@ class TimerT():
     def pause_timer(self):
         print("asfd")
         self.timer_paused = True
+        self.time_when_paused = time.time()
         self.btn_timer_pause.config(text="Unpause Timer", command=self.unpause_timer)
 
     def unpause_timer(self):
         self.timer_paused = False
         self.btn_timer_pause.config(text="Pause Timer", command=self.pause_timer)
+        self.total_time_paused += time.time() - self.time_when_paused
 
 
     def set_timer(self):

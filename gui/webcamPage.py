@@ -9,7 +9,7 @@ import tensorflow as tf
 from tensorflow.keras import layers, models, applications, losses
 import numpy as np
 from playsound import playsound
-
+import datetime
 from pygame import mixer
 
 
@@ -96,11 +96,19 @@ class WebcamPage(tk.Frame):
             self.focus_label.place(relx=0.37, rely=0.7, relwidth=0.3, relheight=0.1)
             self.focus_label.config(font=("Lato", 30, "bold"))
             
+            self.focustracker = []
+            
         else:
             self.stop_webcam()
             self.sound.stop()
             self.btn_start.config(text="Start Webcam")
             self.running = False
+            
+            current_datetime = datetime.datetime.now()
+            formatted_datetime = current_datetime.strftime("%Y-%m-%d %H-%M-%S" + ".lia")
+            file_path = formatted_datetime
+            with open(file_path, "w") as file:
+                file.writelines([str(item) + "\n" for item in self.focustracker])
     
     def stop_webcam(self):
         self.timer.get_label().config(bd=4)
@@ -154,13 +162,14 @@ class WebcamPage(tk.Frame):
                         focuscounter += i
                     if (focuscounter >= 8):
                         print("UNFOCUSED")
-                        
+                        self.focustracker.append(1)
                         self.focus_label.config(text="UNFOCUSED")
                         self.focus_label.config(fg="red")
                         self.focus_label.place(relx=0.35)
                         if not mixer.get_busy():
                             self.sound.play()
                     else:
+                        self.focustracker.append(0)
                         self.focus_label.config(text="FOCUSED")
                         self.focus_label.config(fg="green")
                         self.focus_label.place(relx=0.37)

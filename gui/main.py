@@ -5,6 +5,7 @@ from startPage import StartPage
 from graphPage import graphPage
 from pageOne import PageOne
 from pageTwo import PageTwo
+from overlayPage import OverlayPage
 
 class SampleApp(tk.Tk):
 
@@ -23,7 +24,7 @@ class SampleApp(tk.Tk):
         container.grid_columnconfigure(0, weight=1)
 
         self.frames = {}
-        for F in (StartPage, PageOne, PageTwo, WebcamPage, graphPage):
+        for F in (StartPage, PageOne, PageTwo, WebcamPage, graphPage, OverlayPage):
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = frame
@@ -36,6 +37,15 @@ class SampleApp(tk.Tk):
 
     def show_frame(self, page_name):
         '''Show a frame for the given page name'''
+
+        if page_name=="OverlayPage":
+            screen_width = self.winfo_screenwidth()  # Get the width of the screen
+            self.geometry(f"{screen_width}x100")  # Set window width to screen width and height to 600
+            self.attributes('-topmost', True)  # Keep window always on top
+        else:
+            self.geometry("")  # Reset to default size
+            self.attributes('-topmost', False)  # No longer keep window always on top
+
         frame = self.frames[page_name]
         frame.tkraise()
 

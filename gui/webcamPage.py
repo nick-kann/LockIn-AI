@@ -133,8 +133,6 @@ class WebcamPage(tk.Frame):
     def unpause_timer(self):
         self.timer_paused = False
         self.btn_timer_pause.config(text="Pause Timer", command=self.pause_timer)
-
-
         
     def __del__(self):
         if self.cap.isOpened():

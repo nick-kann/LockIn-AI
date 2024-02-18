@@ -12,5 +12,9 @@ class StartPage(tk.Frame):
                             command=lambda: controller.show_frame("WebcamPage"))
         button2 = tk.Button(self, text="Graph your focus",
                             command=lambda: controller.show_frame("graphPage"))
+        button3 = tk.Button(self, text="Overlay Mode",
+                            command=lambda: controller.show_frame("OverlayPage"))
         button1.pack()
         button2.pack()
+        button3.pack()
+

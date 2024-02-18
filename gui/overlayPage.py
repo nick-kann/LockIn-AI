@@ -7,6 +7,10 @@ import threading
 import time
 import hand_gestures
 import threading
+import tensorflow as tf
+from tensorflow.keras import layers, models, applications, losses
+import numpy as np
+import datetime
 
 class OverlayPage(tk.Frame):
 
@@ -72,6 +76,12 @@ class OverlayPage(tk.Frame):
         self.timer_start_time = None
         self.focus_with_overlay_launched = False
 
+        self.frame_counter = 0
+        saved_model_dir = "./saved_model"
+        self.loaded_model = tf.saved_model.load(saved_model_dir)
+        
+        self.focuslist = []
+
         self.update_frame()  # Start the update loop for the video frames
 
     def update_frame(self):
@@ -83,9 +93,36 @@ class OverlayPage(tk.Frame):
                 frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
                 # Convert the image to PIL format
                 img = Image.fromarray(frame)
-                # Convert the image for Tkinter
-                imgtk = ImageTk.PhotoImage(image=img)
-                # Update the label with the new image
+
+                self.frame_counter += 1
+                if self.frame_counter >= 15:
+                    self.frame_counter = 0
+                    # converting pixel values (uint8) to float32 type
+                    img = tf.cast(img, tf.float32)
+                    # normalizing the data to be in range of -1, +1
+                    img = applications.resnet_v2.preprocess_input(img)
+                    # resizing all images to a shape of 224x*224*3
+                    img = tf.image.resize(img, (224, 224))
+                    img = img.numpy()
+                    img = np.expand_dims(img, axis = 0)
+                    predictions = self.loaded_model(img)
+                    value = np.round(predictions[0, 0])
+                    self.focuslist.append(value)
+                    if (len(self.focuslist) > 12):
+                        del self.focuslist[0]
+                    focuscounter = 0
+                    for i in self.focuslist:
+                        focuscounter += i
+                    if (focuscounter >= 10):
+                        self.focustracker.append(1)
+                        print("UNFOCUSED")
+                        if self.message_label:
+                            self.message_label.config(text="UNFOCUSED!!!!")
+                    else:
+                        self.focustracker.append(0)
+                        print("FOCUSED")
+                        if self.message_label:
+                            self.message_label.config(text="Focused")
         else:
             default_img = ImageTk.PhotoImage(Image.open("./imgs/360_F_526665446_z51DM27QvvoMZ9Gkyx9gr5mkjSOmjswR.jpg"))
         self.parent.after(10, self.update_frame)  # Repeat after an interval
@@ -144,6 +181,17 @@ class OverlayPage(tk.Frame):
             self.message_label.destroy()
             self.focus_with_overlay_launched = False
             self.btn_launch_focus_with_overlay.config(text="Launch Focus With Overlay")
+
+            if self.cap.isOpened():
+                self.cap.release()
+
+            self.running = False
+
+            current_datetime = datetime.datetime.now()
+            formatted_datetime = current_datetime.strftime("%Y-%m-%d %H:%M:%S")
+            file_path = formatted_datetime
+            with open(file_path, "w") as file:
+                file.writelines([str(item) + "\n" for item in self.focustracker])
         else:
             # Create frame to contain message
             self.message_frame = tk.Frame(self.container_frame)
@@ -155,6 +203,12 @@ class OverlayPage(tk.Frame):
 
             self.focus_with_overlay_launched = True
             self.btn_launch_focus_with_overlay.config(text="End Focus With Overlay")
+
+            self.cap = cv2.VideoCapture(0)
+
+            self.running = True
+
+            self.focustracker = []
 
     def gesture_btn_press(self):
         if hand_gestures.keep_running == False:

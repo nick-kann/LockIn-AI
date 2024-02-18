@@ -42,7 +42,7 @@ def process_hand_actions(coords, frame_width, frame_height):
         pyautogui.click()
     if distance(middle_tip, thumb_tip )< 50:  # Threshold for clicking
         pyautogui.click(button='right')
-    if distance(index_tip,middle_tip)<40:
+    if (middle_tip[0] < index_tip[0]):
         if(index_tip[1]<coords[0][1]):
             pyautogui.scroll(1)
         else:

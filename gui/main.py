@@ -2,7 +2,7 @@ import tkinter as tk                # python 3
 from tkinter import font as tkfont  # python 3
 from webcamPage import WebcamPage
 from startPage import StartPage
-from graphPage import graphPage
+from graphPage import GraphPage
 from pageOne import PageOne
 from pageTwo import PageTwo
 from overlayPage import OverlayPage
@@ -27,7 +27,7 @@ class SampleApp(ttkb.Window):
         
 
         self.frames = {}
-        for F in (StartPage, PageOne, PageTwo, WebcamPage, graphPage, OverlayPage):
+        for F in (StartPage, PageOne, PageTwo, WebcamPage, GraphPage, OverlayPage):
             page_name = F.__name__
             frame = F(parent=container, controller=self)
             self.frames[page_name] = frame

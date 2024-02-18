@@ -10,6 +10,7 @@ import threading
 import tensorflow as tf
 from tensorflow.keras import layers, models, applications, losses
 import numpy as np
+import datetime
 
 class OverlayPage(tk.Frame):
 
@@ -113,10 +114,12 @@ class OverlayPage(tk.Frame):
                     for i in self.focuslist:
                         focuscounter += i
                     if (focuscounter >= 10):
+                        self.focustracker.append(1)
                         print("UNFOCUSED")
                         if self.message_label:
                             self.message_label.config(text="UNFOCUSED!!!!")
                     else:
+                        self.focustracker.append(0)
                         print("FOCUSED")
                         if self.message_label:
                             self.message_label.config(text="Focused")
@@ -183,6 +186,12 @@ class OverlayPage(tk.Frame):
                 self.cap.release()
 
             self.running = False
+
+            current_datetime = datetime.datetime.now()
+            formatted_datetime = current_datetime.strftime("%Y-%m-%d %H:%M:%S")
+            file_path = formatted_datetime
+            with open(file_path, "w") as file:
+                file.writelines([str(item) + "\n" for item in self.focustracker])
         else:
             # Create frame to contain message
             self.message_frame = tk.Frame(self.container_frame)
@@ -198,6 +207,8 @@ class OverlayPage(tk.Frame):
             self.cap = cv2.VideoCapture(0)
 
             self.running = True
+
+            self.focustracker = []
 
     def gesture_btn_press(self):
         if hand_gestures.keep_running == False:

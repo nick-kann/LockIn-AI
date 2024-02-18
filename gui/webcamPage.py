@@ -5,6 +5,9 @@ from PIL import Image, ImageTk
 import threading
 import time
 from timert import TimerT
+import tensorflow as tf
+from tensorflow.keras import layers, models, applications, losses
+import numpy as np
 
 class WebcamPage(tk.Frame):
     def __init__(self, parent, controller):
@@ -53,6 +56,11 @@ class WebcamPage(tk.Frame):
         self.timer_label.config(fg="black")
         self.timer_label.config(font=("Lato", 10, "bold"))
         self.timer.set_label(self.timer_label)
+        
+        self.frame_counter = 0
+        
+        saved_model_dir = r"C:\Users\alexd\OneDrive\Documents\GitHub\Pioneer2024\gui\saved_model"
+        self.loaded_model = tf.saved_model.load(saved_model_dir)
         
         self.running = False
         self.update_frame()  # Start the update loop for the video frames

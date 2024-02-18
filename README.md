@@ -10,10 +10,10 @@ LockInAI is an application that uses machine learning to help users maintain foc
 
 ## Built with
 
-- [opencv]()
-- [mediapipe]()
-- [ResNet152v2]()
-- [tkinter]()
+- [opencv](https://opencv.org)
+- [mediapipe](https://github.com/google/mediapipe)
+- [ResNet152v2](https://www.tensorflow.org/api_docs/python/tf/keras/applications/resnet_v2/ResNet152V2)
+- [tkinter](https://docs.python.org/3/library/tkinter.html)
 
 ## 🧑‍💻 Authors 🧑‍💻
 

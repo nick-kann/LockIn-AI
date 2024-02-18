@@ -24,18 +24,18 @@ class WebcamPage(tk.Frame):
         
         # Buttons
         self.btn_start = ttk.Button(self.button_frame, text="Start Webcam", command=self.start_webcam)
-        self.btn_start.pack(side=tk.LEFT, padx=5, pady=5)
+        self.btn_start.pack(side=tk.LEFT, padx=(310, 15), pady=5, ipadx=30)
         
         # self.btn_stop = ttk.Button(self.button_frame, text="Stop Webcam", command=self.stop_webcam)
         # self.btn_stop.pack(side=tk.LEFT, padx=5, pady=5)
 
         # Create the Stop Webcam button
         self.btn_stop = ttk.Button(self.button_frame, text="Exit", command=lambda: controller.show_frame("StartPage"))
-        self.btn_stop.pack(side=tk.LEFT, padx=5, pady=5)
+        self.btn_stop.pack(side=tk.LEFT, padx=15, pady=5, ipadx=40)
 
 
         self.video_frame = tk.Frame(self, width=940, height=480)
-        self.video_frame.pack(padx=10, pady=10, expand=True)
+        self.video_frame.pack(padx=15, pady=5, expand=True)
 
         # Adjustments to video label to place it inside video_frame
         self.video_label = tk.Label(self.video_frame, bd=15)
@@ -43,13 +43,17 @@ class WebcamPage(tk.Frame):
 
         # Create the Start Timer Button
         self.btn_timer = ttk.Button(self.button_frame, text="Start Timer")
-        self.btn_timer.pack(side=tk.LEFT, padx=5, pady=5)
+        self.btn_timer.pack(side=tk.LEFT, padx=15, pady=5, ipadx=30)
+        
+        """
         self.btn_set_timer = ttk.Button(self.button_frame, text="Set Timer")
         self.btn_set_timer.pack(side=tk.LEFT, padx=5, pady=5)
+        """
 
-        self.timer = TimerT(self.button_frame, self.btn_timer, self.btn_set_timer)
+        #self.timer = TimerT(self.button_frame, self.btn_timer, self.btn_set_timer)
+        self.timer = TimerT(self.button_frame, self.btn_timer)
         self.btn_timer.config(command=self.timer.timer_btn_press)
-        self.btn_set_timer.config(command=self.timer.set_timer)
+        #self.btn_set_timer.config(command=self.timer.set_timer)
 
         self.timer_label = tk.Label(self.video_frame, text="Timer Text", bg="#B7EDE8", fg="black", relief="solid", bd=2)
         self.timer_label.place(relx=0.679, rely=0.027, relwidth=0.3, relheight=0.1)

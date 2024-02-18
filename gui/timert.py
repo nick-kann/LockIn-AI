@@ -6,11 +6,11 @@ import threading
 import time
 
 class TimerT():
-    def __init__(self, container, btn_timer, btn_set_timer):
+    def __init__(self, container, btn_timer):
         self.container = container
 
         self.btn_timer = btn_timer
-        self.btn_set_timer = btn_set_timer
+        #self.btn_set_timer = btn_set_timer
         
 
         self.timer_on = False

@@ -55,11 +55,11 @@ class WebcamPage(tk.Frame):
         self.btn_timer.config(command=self.timer.timer_btn_press)
         #self.btn_set_timer.config(command=self.timer.set_timer)
 
-        self.timer_label = tk.Label(self.video_frame, text="Timer Text", bg="#B7EDE8", fg="black", relief="solid", bd=2)
+        self.timer_label = tk.Label(self.video_frame, text="Timer Text", bg="#B7EDE8", fg="black", relief="solid", bd=4)
         self.timer_label.place(relx=0.679, rely=0.027, relwidth=0.3, relheight=0.1)
         self.timer_label.config(bg="#B7EDE8")
         self.timer_label.config(fg="black")
-        self.timer_label.config(font=("Lato", 10, "bold"))
+        self.timer_label.config(font=("Lato", 20, "bold"))
         self.timer.set_label(self.timer_label)
         
         self.frame_counter = 0
@@ -75,25 +75,25 @@ class WebcamPage(tk.Frame):
 
     def start_webcam(self):
         if not self.running:
-            self.timer.get_label().config(bd=4)
-            self.timer.get_label().config(font=("Lato", 20, "bold"))
             self.running = True
             self.btn_start.config(text="Stop Webcam")
+            self.timer.get_label().config(bd=4)
+            self.timer.get_label().config(font=("Lato", 20, "bold"))
         else:
             self.stop_webcam()
             self.btn_start.config(text="Start Webcam")
             self.running = False
     
     def stop_webcam(self):
-        self.timer.get_label().config(bd=2)
-        self.timer.get_label().config(font=("Lato", 10, "bold"))
+        self.timer.get_label().config(bd=4)
+        self.timer.get_label().config(font=("Lato", 20, "bold"))
         self.running = False
         # Clear the video label
         self.video_label.config(image='')  # Clears the label
         # Optionally, you can set a placeholder text or a default image here
         self.video_label.config(text='Webcam stopped')  # Placeholder text
         # If setting a default image, you would do something like this:
-        default_img = ImageTk.PhotoImage(Image.open("./imgs/istockphoto-945783206-612x612.jpg").resize((300, 300), Image.Resampling.HAMMING))
+        default_img = ImageTk.PhotoImage(Image.open("./imgs/istockphoto-945783206-612x612.jpg").resize((640, 480), Image.Resampling.HAMMING))
         self.video_label.imgtk = default_img
         self.video_label.config(image=default_img)
     
@@ -135,7 +135,7 @@ class WebcamPage(tk.Frame):
                         print("UNFOCUSED")
                     
         else:
-            default_img = ImageTk.PhotoImage(Image.open("./imgs/istockphoto-945783206-612x612.jpg").resize((300, 300), Image.Resampling.HAMMING))
+            default_img = ImageTk.PhotoImage(Image.open("./imgs/istockphoto-945783206-612x612.jpg").resize((640, 480), Image.Resampling.HAMMING))
             self.video_label.imgtk = default_img
             self.video_label.config(image=default_img)
         self.parent.after(10, self.update_frame)  # Repeat after an interval

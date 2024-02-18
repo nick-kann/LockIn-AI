@@ -5,6 +5,8 @@ from PIL import Image, ImageTk
 import threading
 # import customtkinter as ctk
 import time
+import hand_gestures
+import threading
 
 class OverlayPage(tk.Frame):
 
@@ -57,8 +59,12 @@ class OverlayPage(tk.Frame):
         self.symbol_frame.grid(row=0, column=7, padx=5, pady=5, sticky='ew')
 
         # Create label to hold symbol for gesture
-        self.symbol_label = ttk.Label(self.symbol_frame, text="Gesture",  width=30)
-        self.symbol_label.pack()
+        self.gesture_label = ttk.Button(self.symbol_frame, text="Gesture",  width=30, command = self.gesture_btn_press)
+        self.gesture_label.pack()
+
+        self.gesture_label = ttk.Button(self.symbol_frame, text="Stop Gesture", width=30,
+                                        command= self.stop_gesture_btn_press)
+        self.gesture_label.pack()
 
         self.running = False
         self.timer_on = False
@@ -149,3 +155,11 @@ class OverlayPage(tk.Frame):
 
             self.focus_with_overlay_launched = True
             self.btn_launch_focus_with_overlay.config(text="End Focus With Overlay")
+
+    def gesture_btn_press(self):
+        thread = threading.Thread(target = hand_gestures.main())
+        thread.start()
+
+    def stop_gesture_btn_press(self):
+        hand_gestures.keep_running = False
+        thread.join()

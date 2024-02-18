@@ -26,8 +26,8 @@ class WebcamPage(tk.Frame):
         self.btn_start = ttk.Button(self.button_frame, text="Start Webcam", command=self.start_webcam)
         self.btn_start.pack(side=tk.LEFT, padx=5, pady=5)
         
-        self.btn_stop = ttk.Button(self.button_frame, text="Stop Webcam", command=self.stop_webcam)
-        self.btn_stop.pack(side=tk.LEFT, padx=5, pady=5)
+        # self.btn_stop = ttk.Button(self.button_frame, text="Stop Webcam", command=self.stop_webcam)
+        # self.btn_stop.pack(side=tk.LEFT, padx=5, pady=5)
 
         # Create the Stop Webcam button
         self.btn_stop = ttk.Button(self.button_frame, text="Exit", command=exit)
@@ -71,6 +71,11 @@ class WebcamPage(tk.Frame):
             self.timer.get_label().config(bd=10)
             self.timer.get_label().config(font=("Lato", 30, "bold"))
             self.running = True
+            self.btn_start.config(text="Stop Webcam")
+        else:
+            self.stop_webcam()
+            self.btn_start.config(text="Start Webcam")
+            self.running = False
     
     def stop_webcam(self):
         self.timer.get_label().config(bd=4)

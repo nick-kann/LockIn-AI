@@ -40,6 +40,7 @@ class TimerT():
         self.timer_label.config(text=f"{int(hours):02}:{int(minutes):02}:{int(seconds):02}.{int(milliseconds):03}")
 
     def start_timer(self):
+
         self.timer_on = True
         self.timer_start_time = time.time()
         self.btn_timer.config(text="Stop Timer")
@@ -55,6 +56,8 @@ class TimerT():
         self.btn_timer_pause.destroy()
 
         self.timer_label.config(text="Timer Text")
+
+
 
     def pause_timer(self):
         print("asfd")

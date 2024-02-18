@@ -13,7 +13,7 @@ mp_drawing = mp.solutions.drawing_utils
 screen_width, screen_height = pyautogui.size()
 pyautogui.FAILSAFE = False
 
-keep_running = True
+keep_running = False
 
 # Convert hand landmarks to pixel coordinates
 def landmark_to_pixel(hand_landmarks, frame_width, frame_height):

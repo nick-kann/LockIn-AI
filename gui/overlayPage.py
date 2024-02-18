@@ -62,9 +62,9 @@ class OverlayPage(tk.Frame):
         self.gesture_label = ttk.Button(self.symbol_frame, text="Gesture",  width=30, command = self.gesture_btn_press)
         self.gesture_label.pack()
 
-        self.gesture_label = ttk.Button(self.symbol_frame, text="Stop Gesture", width=30,
-                                        command= self.stop_gesture_btn_press)
-        self.gesture_label.pack()
+        #self.gesture_label = ttk.Button(self.symbol_frame, text="Stop Gesture", width=30,
+        #                                command= self.stop_gesture_btn_press)
+        #self.gesture_label.pack()
 
         self.running = False
         self.timer_on = False
@@ -157,9 +157,18 @@ class OverlayPage(tk.Frame):
             self.btn_launch_focus_with_overlay.config(text="End Focus With Overlay")
 
     def gesture_btn_press(self):
-        hand_gestures.keep_running = True
-        self.gesture_thread = threading.Thread(target = hand_gestures.main)
-        self.gesture_thread.start()
+        if hand_gestures.keep_running == False:
+            hand_gestures.keep_running = True
+            self.gesture_thread = threading.Thread(target = hand_gestures.main)
+            self.gesture_thread.start()
+
+            self.gesture_label.config(text="Stop Gestures")
+        else:
+            hand_gestures.keep_running = False
+            if hasattr(self, 'gesture_thread') and self.gesture_thread.is_alive():
+                self.gesture_thread.join()
+
+            self.gesture_label.config(text="Gestures")
 
     def stop_gesture_btn_press(self):
         hand_gestures.keep_running = False

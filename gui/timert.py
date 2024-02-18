@@ -36,7 +36,7 @@ class TimerT():
         if not self.timer_start_time:
             return
         elapsed_time = time.time() - self.timer_start_time - self.total_time_paused
-        remaining_time = 1200 - elapsed_time
+        remaining_time = 1500 - elapsed_time
         hours, remainder = divmod(remaining_time, 3600)
         minutes, seconds = divmod(remainder, 60)
         milliseconds = (seconds - int(seconds)) * 1000
@@ -44,9 +44,9 @@ class TimerT():
         time_text = ""
         
         if int(hours) != 0:
-            time_text += f"{int(hours)} hr"
+            time_text += f"{int(hours)} hr "
         if int(minutes) != 0:
-            time_text += f"{int(minutes)} min"
+            time_text += f"{int(minutes)} min "
         
         time_text += f"{int(seconds)} s"
             

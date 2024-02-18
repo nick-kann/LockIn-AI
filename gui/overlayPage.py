@@ -59,7 +59,7 @@ class OverlayPage(ctk.CTkFrame):
         self.btn_timer.configure(command=self.timer.timer_btn_press)
 
         # Timer label
-        self.timer_label = tk.Label(self.timer_frame, text="Timer Text" )
+        self.timer_label = tk.Label(self.timer_frame, text="Timer" )
         self.timer.set_label(self.timer_label)
         self.timer_label.pack()
 

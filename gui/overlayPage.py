@@ -33,7 +33,7 @@ class OverlayPage(tk.Frame):
 
 
         # Start Page Button
-        self.start_page_button = ttk.Button(self.container_frame, text="Start Page",
+        self.start_page_button = ttk.Button(self.container_frame, text="Back to Home",
                            command=lambda: controller.show_frame("StartPage"))
 
         self.start_page_button.grid(row=0, column=1, padx=5, pady=5, sticky='ew')

@@ -10,11 +10,13 @@ from tensorflow.keras import layers, models, applications, losses
 import numpy as np
 import datetime
 from pygame import mixer
+import customtkinter as ctk
 
 
-class WebcamPage(tk.Frame):
+class WebcamPage(ctk.CTkFrame):
     def __init__(self, parent, controller):
-        tk.Frame.__init__(self, parent)
+        # tk.Frame.__init__(self, parent)
+        super().__init__(parent)
         self.parent = parent
         self.controller = controller
 
@@ -22,7 +24,7 @@ class WebcamPage(tk.Frame):
         self.cap = cv2.VideoCapture(0)
 
         # Create a frame for the buttons
-        self.button_frame = ttk.Frame(self)
+        self.button_frame = ctk.CTkFrame(self)
         self.button_frame.pack(fill=tk.X, side=tk.BOTTOM, expand=True)
         
         # Buttons

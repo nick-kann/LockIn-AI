@@ -105,6 +105,7 @@ class WebcamPage(tk.Frame):
         default_img = ImageTk.PhotoImage(Image.open("./imgs/istockphoto-945783206-612x612.jpg").resize((640, 480), Image.Resampling.HAMMING))
         self.video_label.imgtk = default_img
         self.video_label.config(image=default_img)
+        self.focus_label.config(text="")
 
               
     
@@ -137,12 +138,12 @@ class WebcamPage(tk.Frame):
                     predictions = self.loaded_model(img)
                     value = np.round(predictions[0, 0])
                     self.focuslist.append(value)
-                    if (len(self.focuslist) > 12):
+                    if (len(self.focuslist) > 10):
                         del self.focuslist[0]
                     focuscounter = 0
                     for i in self.focuslist:
                         focuscounter += i
-                    if (focuscounter >= 10):
+                    if (focuscounter >= 8):
                         print("UNFOCUSED")
                         
                         self.focus_label.config(text="UNFOCUSED")

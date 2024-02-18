@@ -51,8 +51,8 @@ class WebcamPage(tk.Frame):
         self.btn_timer.config(command=self.timer.timer_btn_press)
         self.btn_set_timer.config(command=self.timer.set_timer)
 
-        self.timer_label = tk.Label(self.video_frame, text="Timer Text", bg="#B7EDE8", fg="black", relief="solid", bd=4)
-        self.timer_label.place(relx=0.8, rely=0, relwidth=0.2, relheight=0.1)
+        self.timer_label = tk.Label(self.video_frame, text="Timer Text", bg="#B7EDE8", fg="black", relief="solid", bd=2)
+        self.timer_label.place(relx=0.679, rely=0.027, relwidth=0.3, relheight=0.1)
         self.timer_label.config(bg="#B7EDE8")
         self.timer_label.config(fg="black")
         self.timer_label.config(font=("Lato", 10, "bold"))
@@ -71,8 +71,8 @@ class WebcamPage(tk.Frame):
 
     def start_webcam(self):
         if not self.running:
-            self.timer.get_label().config(bd=10)
-            self.timer.get_label().config(font=("Lato", 30, "bold"))
+            self.timer.get_label().config(bd=4)
+            self.timer.get_label().config(font=("Lato", 20, "bold"))
             self.running = True
             self.btn_start.config(text="Stop Webcam")
         else:
@@ -81,7 +81,7 @@ class WebcamPage(tk.Frame):
             self.running = False
     
     def stop_webcam(self):
-        self.timer.get_label().config(bd=4)
+        self.timer.get_label().config(bd=2)
         self.timer.get_label().config(font=("Lato", 10, "bold"))
         self.running = False
         # Clear the video label

@@ -37,7 +37,18 @@ class TimerT():
         hours, remainder = divmod(elapsed_time, 3600)
         minutes, seconds = divmod(remainder, 60)
         milliseconds = (seconds - int(seconds)) * 1000
-        self.timer_label.config(text=f"{int(hours):02}:{int(minutes):02}:{int(seconds):02}.{int(milliseconds):03}")
+        
+        time_text = ""
+        
+        if int(hours) != 0:
+            time_text += f"{int(hours)} hr"
+        if int(minutes) != 0:
+            time_text += f"{int(minutes)} min"
+        
+        time_text += f"{int(seconds)} s"
+            
+        
+        self.timer_label.config(text=time_text)
 
     def start_timer(self):
 

@@ -22,11 +22,11 @@ class GraphPage(tk.Frame):
         self.button_frame.pack()
 
         file_button = ttk.Button(self.button_frame, text="Select a file", style='Main.TButton', command=self.select_file)
-        file_button.pack()
+        file_button.pack(pady=20)
         
         button = ttk.Button(self.button_frame, text="Go to the start page", style='Main.TButton',
                            command=lambda: controller.show_frame("StartPage"))
-        button.pack()
+        button.pack(pady=20)
 
     def select_file(self):
         """Open a file dialog for .lia files and update the filepath label with the selected file's path."""

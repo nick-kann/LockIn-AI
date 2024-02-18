@@ -126,7 +126,7 @@ class OverlayPage(ctk.CTkFrame):
                         self.focustracker.append(1)
                         print("UNFOCUSED")
                         if self.message_label:
-                            self.message_label.config(text="UNFOCUSED!!!!")
+                            self.message_label.configure(text="UNFOCUSED!!!!")
                         if not mixer.get_busy():
                                 self.sound.play()
                     else:
@@ -134,7 +134,7 @@ class OverlayPage(ctk.CTkFrame):
                         print("FOCUSED")
                         self.sound.stop()
                         if self.message_label:
-                            self.message_label.config(text="Focused")
+                            self.message_label.configure(text="Focused")
 
         else:
             default_img = ImageTk.PhotoImage(Image.open("./imgs/360_F_526665446_z51DM27QvvoMZ9Gkyx9gr5mkjSOmjswR.jpg"))
@@ -151,7 +151,7 @@ class OverlayPage(ctk.CTkFrame):
             self.message_frame.destroy()
             self.message_label.destroy()
             self.focus_with_overlay_launched = False
-            self.btn_launch_focus_with_overlay.config(text="Launch Focus With Overlay")
+            self.btn_launch_focus_with_overlay.configure(text="Launch Focus With Overlay")
 
             if self.cap.isOpened():
                 self.cap.release()
@@ -173,7 +173,7 @@ class OverlayPage(ctk.CTkFrame):
             self.message_label.pack()
 
             self.focus_with_overlay_launched = True
-            self.btn_launch_focus_with_overlay.config(text="End Focus With Overlay")
+            self.btn_launch_focus_with_overlay.configure(text="End Focus With Overlay")
 
             self.cap = cv2.VideoCapture(0)
 
@@ -187,13 +187,13 @@ class OverlayPage(ctk.CTkFrame):
             self.gesture_thread = threading.Thread(target = hand_gestures.main)
             self.gesture_thread.start()
 
-            self.gesture_label.config(text="Stop Gestures")
+            self.gesture_label.configure(text="Stop Gestures")
         else:
             hand_gestures.keep_running = False
             if hasattr(self, 'gesture_thread') and self.gesture_thread.is_alive():
                 self.gesture_thread.join()
 
-            self.gesture_label.config(text="Gestures")
+            self.gesture_label.configure(text="Gestures")
 
     def stop_gesture_btn_press(self):
         hand_gestures.keep_running = False

@@ -4,7 +4,15 @@
 
 LockInAI is an application that uses machine learning to help users maintain focus when working. LockInAI uses a neural network on a video of the user to determine whether they are currently focused or unfocused on their task, using binary classification. What makes this project special is that it's able to determine focus or unfocus when the user is working on tasks off of their computer, like on paper. LockInAI also uses machine learning and advanced AR technology to allow for in-air gesture controls. Since getting on the computer can be a gateway for many distractions, by allowing the user to scroll or click just by swiping the air, it helps ensure that the user will stay on task.
 
-### Hand Gesture Demonstration
+## How we built it
+We trained a pre-trained model (ResNet152v2) on our own data created during the hackathon in Google Colab notebooks. The CNN binary classifier was trained on individual frames from the training videos, and we obtained high accuracy. In the app, this model was called every few frames to analyze the user. If the user is detected as unfocused multiple times in a row, the app gives a warning to the user.
+
+
+For the gesture controls, we used OpenCV's media pipe pose estimation, which tracks 22 points on the hand. Through computing the relationships between different points, we developed three highly accurate gesture controls: left-click, scrolling up, and and scrolling down.
+
+
+
+## Hand Gesture Demonstration
 
 ![Alt Text](./output.gif)
 

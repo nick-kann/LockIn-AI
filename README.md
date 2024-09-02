@@ -10,6 +10,10 @@ We trained a pre-trained model (ResNet152v2) on our own data created during the 
 
 For the gesture controls, we used OpenCV's media pipe pose estimation, which tracks 22 points on the hand. Through computing the relationships between different points, we developed three highly accurate gesture controls: left-click, scrolling up, and and scrolling down.
 
+## Focus Mode Demonstration
+
+https://github.com/user-attachments/assets/5aa119b8-43d7-49a8-b0a8-4d2059c5bbb5
+
 
 
 ## Hand Gesture Demonstration
@@ -28,4 +32,4 @@ For the gesture controls, we used OpenCV's media pipe pose estimation, which tra
 Alexander S. Du / [@Mantlemoose](https://github.com/Mantlemoose "Mantlemoose's github page") \
 Prarthan Ghosh / [@coder2003lucky](https://github.com/coder2003lucky "coder2003lucky's github page") \
 Eashan Chatterjee / [@EashanC23](https://github.com/EashanC23 "EashanC23's github page") \
-Nicholas Kann / [@butter-my-toast](https://github.com/butter-my-toast "butter-my-toast's github page")
+Nicholas Kann / [@nick-kann](https://github.com/nick-kann "nick-kann's github page")

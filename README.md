@@ -12,9 +12,8 @@ For the gesture controls, we used OpenCV's media pipe pose estimation, which tra
 
 ## Focus Mode Demonstration
 
-https://github.com/user-attachments/assets/5aa119b8-43d7-49a8-b0a8-4d2059c5bbb5
 
-
+https://github.com/user-attachments/assets/eeaaf4d8-9dfb-4ba8-84a3-5f24cb311cf1
 
 ## Hand Gesture Demonstration
 

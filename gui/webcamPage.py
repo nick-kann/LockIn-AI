@@ -6,7 +6,7 @@ import threading
 import time
 from timert import TimerT
 import tensorflow as tf
-from tensorflow.keras import layers, models, applications, losses
+from keras import layers, models, applications, losses
 import numpy as np
 import datetime
 from pygame import mixer
@@ -69,14 +69,15 @@ class WebcamPage(ctk.CTkFrame):
         self.timer.set_label(self.timer_label)
 
         mixer.init()
-        self.sound = mixer.Sound("unfocused-alarm.mp3")
+        self.sound = mixer.Sound("/Users/nicholaskann/Documents/GitHub/LockIn-AI/unfocused-alarm.mp3")
         self.sound_playing = False
         
         self.frame_counter = 0
         
-        saved_model_dir = "./saved_model"
+        saved_model_dir = "/Users/nicholaskann/Documents/GitHub/LockIn-AI/saved_model"
         self.loaded_model = tf.saved_model.load(saved_model_dir)
-        
+        self.infer = self.loaded_model.signatures['serving_default']
+
         self.focuslist = []
         
         self.running = False
@@ -125,8 +126,8 @@ class WebcamPage(ctk.CTkFrame):
         self.video_label.config(image=default_img)
         self.focus_label.config(text="")
 
-              
-    
+
+
     def update_frame(self):
         if self.running:
             # Capture the latest frame from the webcam
@@ -141,9 +142,9 @@ class WebcamPage(ctk.CTkFrame):
                 # Update the label with the new image
                 self.video_label.imgtk = imgtk
                 self.video_label.configure(image=imgtk)
-                
+
                 self.frame_counter += 1
-                if self.frame_counter >= 15:
+                if self.frame_counter >= 10:
                     self.frame_counter = 0
                     # converting pixel values (uint8) to float32 type
                     img = tf.cast(img, tf.float32)
@@ -153,15 +154,20 @@ class WebcamPage(ctk.CTkFrame):
                     img = tf.image.resize(img, (224, 224))
                     img = img.numpy()
                     img = np.expand_dims(img, axis = 0)
-                    predictions = self.loaded_model(img)
-                    value = np.round(predictions[0, 0])
+                    predictions = self.infer(tf.constant(img))
+
+                    output_tensor = predictions['output_0']
+                    prediction_values = output_tensor.numpy()  # Convert tensor to numpy array
+                    value = np.round(prediction_values[0, 0])
+
                     self.focuslist.append(value)
                     if (len(self.focuslist) > 10):
                         del self.focuslist[0]
                     focuscounter = 0
                     for i in self.focuslist:
                         focuscounter += i
-                    if (focuscounter >= 8):
+                    print(f"focuscounter: {focuscounter}")
+                    if (focuscounter >= 6):
                         print("UNFOCUSED")
                         self.focustracker.append(1)
                         self.focus_label.config(text="UNFOCUSED")
@@ -175,14 +181,14 @@ class WebcamPage(ctk.CTkFrame):
                         self.focus_label.config(fg="green")
                         self.focus_label.place(relx=0.37)
                         self.sound.stop()
-                        
-                    
+
+
         else:
-            default_img = ImageTk.PhotoImage(Image.open("./imgs/istockphoto-945783206-612x612.jpg").resize((640, 480), Image.Resampling.HAMMING))
+            default_img = ImageTk.PhotoImage(Image.open("/Users/nicholaskann/Documents/GitHub/LockIn-AI/imgs/istockphoto-945783206-612x612.jpg").resize((640, 480), Image.Resampling.HAMMING))
             self.video_label.imgtk = default_img
             self.video_label.config(image=default_img)
         self.parent.after(10, self.update_frame)  # Repeat after an interval
-        if self.timer.timer_on and (not self.timer.timer_paused):   
+        if self.timer.timer_on and (not self.timer.timer_paused):
             self.timer.update_timer()
 
     def __del__(self):

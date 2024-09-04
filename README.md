@@ -12,8 +12,9 @@ For the gesture controls, we used OpenCV's media pipe pose estimation, which tra
 
 ## Focus Mode Demonstration
 
+###### The video is set to 2x speed because the focus status takes around 6 seconds to change. This slight leniency is intentional to prevent small distractions from affecting the focus status.
+https://github.com/user-attachments/assets/88b9befb-5687-47a0-8aa8-5034a1f79972
 
-https://github.com/user-attachments/assets/eeaaf4d8-9dfb-4ba8-84a3-5f24cb311cf1
 
 ## Hand Gesture Demonstration
 
